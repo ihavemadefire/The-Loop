@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'the_loop_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'The_Loop_DB_1',
+        'USER': 'The_Loop_Admin',
+        'PASSWORD': "TheLoopDB",
+        'HOST': 'database-1.cszuzhwx3flb.us-east-1.rds.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
