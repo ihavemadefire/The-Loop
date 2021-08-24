@@ -3,8 +3,6 @@ from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField
 from django.db.models.fields.related import ManyToManyField
 
-# Create your models here.
-
 
 class District(models.Model):
     district = models.CharField(max_length=25)
@@ -50,3 +48,24 @@ class Place(models.Model):
     
     def __str__(self):
         return self.name
+
+class Time(models.Model):
+    day_choices = [
+        ('monday', 'Monday'),
+        ('tuesday', 'Tuesday'),
+        ('wednesday', 'Wednesday'),
+        ('thursday', 'Thursday'),
+        ('friday', 'Friday'),
+        ('saturday', 'Saturday'),
+        ('Sunday', 'Sunday'),
+    ]
+    day = models.CharField(max_length=12, choices=day_choices)
+    time = models.TimeField()
+    open_close = models.BooleanField()
+    restaurant = models.ForeignKey(Place, null=True ,on_delete=CASCADE)
+
+    def __str__(self):
+        o_c = "Close"
+        if self.open_close:
+            o_c = "Open"
+        return self.day + ' | ' + str(self.time) + ' | ' + o_c
