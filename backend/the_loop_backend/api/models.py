@@ -1,5 +1,7 @@
 from django.db import models
+from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
+from django.db.models.expressions import Case
 from django.db.models.fields import CharField
 from django.db.models.fields.related import ManyToManyField
 
@@ -11,8 +13,11 @@ class District(models.Model):
         return self.district + " District"
 
 
-class Amenities(models.Model):
+class Amenity(models.Model):
     name = models.CharField(max_length=30)
+
+    class Meta:
+        verbose_name_plural = "Amenities"
 
     def __str__(self):
         return self.name
@@ -42,7 +47,7 @@ class Place(models.Model):
     ]
     price = models.CharField(max_length=5, default=1, choices=price_choices)
     district = models.ForeignKey(District, on_delete=models.CASCADE, null=True)
-    amenities = ManyToManyField(Amenities)
+    amenities = ManyToManyField(Amenity)
     type = models.ForeignKey(Type, on_delete=CASCADE)
     subtype = ManyToManyField(SubType)
     
@@ -62,10 +67,37 @@ class Time(models.Model):
     day = models.CharField(max_length=12, choices=day_choices)
     time = models.TimeField()
     open_close = models.BooleanField()
-    restaurant = models.ForeignKey(Place, null=True ,on_delete=CASCADE)
+    place = models.ForeignKey(Place, null=True ,on_delete=CASCADE)
 
     def __str__(self):
         o_c = "Close"
         if self.open_close:
             o_c = "Open"
         return self.day + ' | ' + str(self.time) + ' | ' + o_c
+
+
+class TypeEvent(models.Model):
+    type = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.type
+
+
+class Event(models.Model):
+    name = models.CharField(max_length=150)
+    type = ManyToManyField(TypeEvent)
+    venue = models.ForeignKey(Place, on_delete=CASCADE)
+    recurring = models.BooleanField()
+    active = models.BooleanField()
+    description = models.TextField()
+    tix_required = models.BooleanField()
+    tix_link = models.URLField(null=True)
+
+
+class EventDate(models.Model):
+    date = models.DateField(null=True)
+    time = models.TimeField(null=True)
+    where = models.ForeignKey(Event, null=True, on_delete=CASCADE)
+
+    def __str__(self):
+        return str(self.when)
