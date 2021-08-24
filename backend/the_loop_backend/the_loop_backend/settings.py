@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
+    'admin_reorder',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'admin_reorder.middleware.ModelAdminReorder',
 ]
 
 ROOT_URLCONF = 'the_loop_backend.urls'
@@ -128,3 +130,24 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ADMIN_REORDER = (
+    # First group of fields in the Admin
+    {'app': 'api', 'label': 'Places',
+     'models': ('api.Place',
+                'api.Type',
+                'api.SubType',
+                'api.Amenity',
+                'api.District')
+    },
+    # Second group: same app, but different label
+    {'app': 'api', 'label': 'Events',
+     'models': ('api.Event',
+                'api.EventDate',
+                'api.TypeEvent')
+    },
+    {'app': 'auth', 'label': 'Users and Authentication',
+     'models': ('auth.User',
+                'auth.Group')
+    },)
+
