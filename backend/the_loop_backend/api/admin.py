@@ -1,7 +1,7 @@
 from django.contrib import admin
 from.models import *
 
-admin.site.site_header="What's Good Admin"
+admin.site.site_header="The Loop Admin"
 
 class TimeInline(admin.TabularInline):
     model = Time
