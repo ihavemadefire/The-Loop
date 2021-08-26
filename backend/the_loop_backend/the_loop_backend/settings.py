@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'admin_reorder',
+    'graphene_django',
 ]
 
 MIDDLEWARE = [

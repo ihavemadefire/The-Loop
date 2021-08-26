@@ -14,13 +14,13 @@ class District(models.Model):
 
 
 class Amenity(models.Model):
-    name = models.CharField(max_length=30)
+    amenity = models.CharField(max_length=30)
 
     class Meta:
         verbose_name_plural = "Amenities"
 
     def __str__(self):
-        return self.name
+        return self.amenity
 
 class Type(models.Model):
     type = models.CharField(max_length=40)
@@ -29,10 +29,10 @@ class Type(models.Model):
         return self.type
 
 class SubType(models.Model):
-    SubType = models.CharField(max_length=40)
+    subtype = models.CharField(max_length=40)
 
     def __str__(self):
-        return self.SubType
+        return self.subtype
 
 class Place(models.Model):
     name = models.CharField(max_length=100)
@@ -46,6 +46,7 @@ class Place(models.Model):
         ('$$$$', '$$$$')
     ]
     price = models.CharField(max_length=5, default=1, choices=price_choices)
+    open_now = models.BooleanField()
     district = models.ForeignKey(District, on_delete=models.CASCADE, null=True)
     amenities = ManyToManyField(Amenity)
     type = models.ForeignKey(Type, on_delete=CASCADE)
@@ -66,7 +67,11 @@ class Time(models.Model):
     ]
     day = models.CharField(max_length=12, choices=day_choices)
     time = models.TimeField()
-    open_close = models.BooleanField()
+    o_c_choices = [
+        (True, 'Open'),
+        (False, 'Close')
+    ]
+    open_close = models.BooleanField(choices=o_c_choices)
     place = models.ForeignKey(Place, null=True ,on_delete=CASCADE)
 
     def __str__(self):
