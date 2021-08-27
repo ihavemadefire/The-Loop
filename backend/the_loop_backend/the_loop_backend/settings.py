@@ -40,9 +40,12 @@ INSTALLED_APPS = [
     'api',
     'admin_reorder',
     'graphene_django',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -152,3 +155,6 @@ ADMIN_REORDER = (
                 'auth.Group')
     },)
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000"
+]
