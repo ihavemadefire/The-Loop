@@ -108,4 +108,4 @@ class EventDate(models.Model):
     where = models.ForeignKey(Event, null=True, on_delete=CASCADE)
 
     def __str__(self):
-        return str(self.date + ' ' + self.time)
+        return str(self.date) + ' ' + str(self.time)
