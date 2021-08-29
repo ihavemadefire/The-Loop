@@ -98,6 +98,9 @@ class Event(models.Model):
     tix_required = models.BooleanField()
     tix_link = models.URLField(null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class EventDate(models.Model):
     date = models.DateField(null=True)
@@ -105,4 +108,4 @@ class EventDate(models.Model):
     where = models.ForeignKey(Event, null=True, on_delete=CASCADE)
 
     def __str__(self):
-        return str(self.when)
+        return str(self.date + ' ' + self.time)
