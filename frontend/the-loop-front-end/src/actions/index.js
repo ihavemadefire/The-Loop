@@ -17,3 +17,9 @@ export const setTimeLater = () => {
 		type: 'TIME_LATER_SELECTED'
 	};
 };
+
+export const setMainApp = () => {
+	return {
+		type: 'SHOW_MAIN_APP'
+	};
+};

@@ -11,6 +11,14 @@ const timeFrameReducer = (timeFrame = 'now', action) => {
 	return timeFrame;
 };
 
+const showMainAppReducer = (showMain = false, action) => {
+	if (action.type === 'SHOW_MAIN_APP') {
+		return true;
+	}
+	return showMain;
+}
+
 export default combineReducers({
-	timeFrame: timeFrameReducer
+	showMain: showMainAppReducer,
+	timeFrame: timeFrameReducer,
 });

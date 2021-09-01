@@ -3,7 +3,7 @@ import { Box, Container, ButtonGroup, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { setTimeNow, setTimeAny, setTimeLater } from '../actions/index.js';
+import { setTimeNow, setTimeAny, setTimeLater, setMainApp } from '../actions/index.js';
 import LogoWithCatchphrase from './logos/logoWithCatchphrase.js';
 import { COLORS } from '../styles/colors.js';
 
@@ -19,29 +19,41 @@ const LandingForm = (props) => {
 		} 
 		return classes.chip;
 	}
+	
+	if (props.showMainApp) {
+		return (<div>Main App engage boing boing!</div>);
+	} else {
+		return (
+			<Container maxWidth="sm">
+				<Box className={classes.box} color="primary">
+					<LogoWithCatchphrase />
+					<ButtonGroup variant="text" size="large" color="primary" aria-label="large outlined primary button group">
+						<Button 
+							className={handleTimeFrameSelection('now')}
+							onClick={() => props.setTimeNow()}
+						>
+							now
+						</Button>
+						<Button 
+							className={handleTimeFrameSelection('later')}
+							onClick={() => props.setTimeLater()}
+						>
+							later
+						</Button>
+					</ButtonGroup>
+					<Button 
+						className={classes.mainButton}
+						variant="contained"
+						color="primary"
+						onClick={() => props.setMainApp()}
+					>
+						loop me in
+					</Button>
+				</Box>
+			</Container>
+		);
+	};
 
-	return (
-		<Container maxWidth="sm">
-			<Box className={classes.box} color="primary">
-				<LogoWithCatchphrase />
-				<ButtonGroup variant="text" size="large" color="primary" aria-label="large outlined primary button group">
-					<Button 
-						className={handleTimeFrameSelection('now')}
-						onClick={() => props.setTimeNow()}
-					>
-						now
-					</Button>
-					<Button 
-						className={handleTimeFrameSelection('later')}
-						onClick={() => props.setTimeLater()}
-					>
-						later
-					</Button>
-				</ButtonGroup>
-				<Button className={classes.mainButton} variant="contained" color="primary">loop me in</Button>
-			</Box>
-		</Container>
-	);
 };
 
 const useStyles = makeStyles({
@@ -69,7 +81,7 @@ const useStyles = makeStyles({
 });
 
 const mapStateToProps = (state) => {
-	return { timeFrame: state.timeFrame };
+	return { timeFrame: state.timeFrame, showMainApp: state.showMain };
 };
 
-export default connect(mapStateToProps, { setTimeAny, setTimeNow, setTimeLater })(LandingForm);
+export default connect(mapStateToProps, { setTimeAny, setTimeNow, setTimeLater, setMainApp })(LandingForm);
