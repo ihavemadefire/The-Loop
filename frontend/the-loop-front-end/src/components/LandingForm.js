@@ -20,9 +20,7 @@ const LandingForm = (props) => {
 		return classes.chip;
 	}
 	
-	if (props.showMainApp) {
-		return (<div>Main App engage boing boing!</div>);
-	} else {
+	if (!props.showMainApp) {
 		return (
 			<Container maxWidth="sm">
 				<Box className={classes.box} color="primary">
@@ -52,6 +50,8 @@ const LandingForm = (props) => {
 				</Box>
 			</Container>
 		);
+	} else {
+		return null;
 	};
 
 };

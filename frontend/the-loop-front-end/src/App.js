@@ -3,7 +3,8 @@ import {ApolloProvider} from 'react-apollo'
 import { ThemeProvider } from '@material-ui/core/styles';
 
 import { theme } from './styles/theme.js';
-import LandingForm from './components/LandingForm.js'
+import LandingForm from './components/LandingForm.js';
+import MainApp from './components/MainApp.js';
 import Footer from './components/Footer.js';
 
 
@@ -17,6 +18,7 @@ function App() {
 		<ApolloProvider client={client}>
 			<ThemeProvider theme={theme}>
 				<LandingForm />
+				<MainApp />
 				<Footer />
 			</ThemeProvider>
 		</ApolloProvider>
