@@ -4,7 +4,7 @@ import { COLORS } from '../styles/colors.js';
 
 const Footer = () => (
 	<FootStyled>
-		a portfolio project by the Holbertonian Triumvirate, 2021
+		a portfolio project
 	</FootStyled>
 );
 
