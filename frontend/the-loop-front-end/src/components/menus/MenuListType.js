@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { setEventSearch, setPlaceSearch } from '../../actions';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -16,10 +18,22 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     marginRight: theme.spacing(2),
   },
+	button: {
+		flexShrink: 0,
+		whiteSpace: 'nowrap',
+		width: '120px',
+		borderBottom: '1px solid',
+		borderTop: '1px solid',
+		marginRight: '3px'
+	},
+	typography: {
+
+	}
 }));
 
-export default function MenuListComposition() {
-  const classes = useStyles();
+const MenuListType = (props) => {
+  console.log(props);
+	const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -27,8 +41,26 @@ export default function MenuListComposition() {
     setOpen((prevOpen) => !prevOpen);
   };
 
+	const currentSearch = () => {
+		if (props.searchType === 'events') {
+			return 'things to do';
+		} else {
+			return 'places to go';
+		}
+	}
+
   const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+    
+		const selection = event.target.firstChild.data;
+		if (selection === 'places to go') {
+			props.setPlaceSearch();
+			console.log('You want places');
+		} else if (selection === 'things to do') {
+			props.setEventSearch();
+			console.log('You want events');
+		}
+
+		if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
 
@@ -60,8 +92,9 @@ export default function MenuListComposition() {
           aria-controls={open ? 'menu-list-grow' : undefined}
           aria-haspopup="true"
           onClick={handleToggle}
+					className={classes.button}
         >
-          <Typography>events</Typography>
+          <Typography className={classes.typography}>{currentSearch()}</Typography>
         </Button>
         <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
           {({ TransitionProps, placement }) => (
@@ -72,9 +105,8 @@ export default function MenuListComposition() {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>events and happenings</MenuItem>
+                    <MenuItem onClick={handleClose}>things to do</MenuItem>
                     <MenuItem onClick={handleClose}>places to go</MenuItem>
-                    <MenuItem onClick={handleClose}>restaurants</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -85,3 +117,9 @@ export default function MenuListComposition() {
     </div>
   );
 };
+
+const mapStateToProps = (state) => {
+	return { searchType: state.searchType };
+};
+
+export default connect(mapStateToProps, { setEventSearch, setPlaceSearch })(MenuListType);

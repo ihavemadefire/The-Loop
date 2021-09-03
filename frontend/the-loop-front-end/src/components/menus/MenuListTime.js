@@ -8,6 +8,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { setTimeNow, setTimeAny, setTimeLater } from '../../actions';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -17,9 +19,19 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     marginRight: theme.spacing(2),
   },
+	button: {
+		flexShrink: 0,
+		whiteSpace: 'nowrap',
+		width: '90px',
+		borderBottom: '1px solid',
+		borderTop: '1px solid',
+	},
+	typography: {
+
+	}
 }));
 
-export default function MenuListComposition() {
+const MenuListTime = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -28,7 +40,27 @@ export default function MenuListComposition() {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event) => {
+  const currentTime = () => {
+		if (props.timeFrame === 'now') {
+			return 'now';
+		} else if (props.timeFrame === 'any') {
+			return 'anytime';
+		} else if (props.timeFrame === 'later') {
+			return 'later';
+		}
+	};
+
+	const handleClose = (event) => {
+
+		const selection = event.target.firstChild.data;
+		if (selection === 'now') {
+			props.setTimeNow();
+		} else if (selection === 'later') {
+			props.setTimeLater();
+		} else if (selection === 'anytime') {
+			props.setTimeAny();
+		}
+
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -61,8 +93,9 @@ export default function MenuListComposition() {
           aria-controls={open ? 'menu-list-grow' : undefined}
           aria-haspopup="true"
           onClick={handleToggle}
+					className={classes.button}
         >
-          <Typography>now</Typography>
+          <Typography className={classes.typography}>{currentTime()}</Typography>
         </Button>
         <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
           {({ TransitionProps, placement }) => (
@@ -86,3 +119,9 @@ export default function MenuListComposition() {
     </div>
   );
 };
+
+const mapStateToProps = (state) => {
+	return { timeFrame: state.timeFrame };
+};
+
+export default connect(mapStateToProps, { setTimeAny, setTimeNow, setTimeLater })(MenuListTime);

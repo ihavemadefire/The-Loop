@@ -23,3 +23,15 @@ export const setMainApp = () => {
 		type: 'SHOW_MAIN_APP'
 	};
 };
+
+export const setEventSearch = () => {
+	return {
+		type: 'SEARCH_FOR_EVENTS'
+	};
+};
+
+export const setPlaceSearch = () => {
+	return {
+		type: 'SEARCH_FOR_PLACES'
+	};
+};
