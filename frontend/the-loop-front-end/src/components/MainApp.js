@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
-import MenuBarRightDrawer from './menus/AmenitiesDrawer';
+import MenuBarRightDrawer from './menus/MenuBarRightDrawer.js';
 import { setTimeNow, setTimeAny, setTimeLater, setMainApp } from '../actions/index.js';
 import SimpleCard from './CardTemp.js';
 
