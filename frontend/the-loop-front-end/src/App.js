@@ -1,25 +1,28 @@
-import './App.css';
 import ApolloClient from 'apollo-boost';
 import {ApolloProvider} from 'react-apollo'
-import Places from './Places'
-import Events from './Events';
+import { ThemeProvider } from '@material-ui/core/styles';
+
+import { theme } from './styles/theme.js';
+import LandingForm from './components/LandingForm.js';
+import MainApp from './components/MainApp.js';
+import Footer from './components/Footer.js';
 
 
 const client = new ApolloClient({
-  uri: "http://3.88.191.13:8000/___graphql"
+	uri: "http://3.88.191.13:8000/___graphql"
 });
 
-const App = () => (
-  <ApolloProvider client={client}>
-    <div className="section">
-      <div>
-        <Places />
-      </div>
-      <div>
-        <Events />
-      </div>
-    </div>
-  </ApolloProvider>
-)
+function App() {
+  
+	return (
+		<ApolloProvider client={client}>
+			<ThemeProvider theme={theme}>
+				<LandingForm />
+				<MainApp />
+				<Footer />
+			</ThemeProvider>
+		</ApolloProvider>
+	)
+};
 
 export default App;
