@@ -1,11 +1,11 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import Link from '@material-ui/core/Link';
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
 
 import { COLORS } from '../styles/colors.js'
+import DetailPop from './menus/DetailPop.js';
 
 
 const useStyles = makeStyles({
@@ -14,7 +14,7 @@ const useStyles = makeStyles({
 		color: COLORS.darkBlue,
   },
 	card: {
-		maxWidth: 400,
+		maxWidth: 375,
 		marginBottom: 5,
 	},
   bullet: {
@@ -55,18 +55,19 @@ const useStyles = makeStyles({
 	subHeading: {
 		fontWeight: 300,
 	},
-	subInfo: {
+	venueLink: {
 		fontWeight: 500,
 		color: COLORS.darkBlue,
+	},
+	cardHeader: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between'
 	}
 });
 
-export default function SimpleCard() {
+export default function EventCard() {
   const classes = useStyles();
-
-	const venueClick = (venue) => {
-		console.log(venue);
-	};
 
 	const query = gql`
 		{
@@ -84,6 +85,16 @@ export default function SimpleCard() {
 					phoneNumber
 					price
 					description
+					type {
+						type
+					}
+					amenities {
+						id
+						amenity
+					}
+					subtype {
+						subtype
+					}
 				}
 			}
 		}
@@ -94,15 +105,20 @@ export default function SimpleCard() {
             if (loading) return <p>Loading...</p>;
             if (error) return <p>I have a bad feeling about this...</p>
 						console.log(data);
-            return data.allEvents.map(({id, name, type, venue, recurring, active, description, tixRequired, tixLink}) => (
-                <Card className={classes.card} key={id}>
+            return data.allEvents.map((thing) => (
+                <Card className={classes.card} key={thing.id}>
 									<div className={classes.content}>
-											<div className={classes.type}>{type[0].type}</div>
-											<div className={classes.name}>{name}</div>
+											<div className={classes.cardHeader}>
+												<div>
+													<div className={classes.type}>{thing.type[0].type}</div>
+													<div className={classes.name}>{thing.name}</div>
+												</div>
+												<DetailPop  detailType='event' venue={thing}/>
+											</div>
 											<div className={classes.shortDescription}>Short description describing what this thing is.</div>
 											<div className={classes.inlineInfo}>
 												<div className={classes.subHeading}>Where:</div>
-												<Link  href="#" className={classes.subInfo} onClick={() => venueClick(venue)}>{venue.name}</Link>
+												<DetailPop detailType='venue' details={thing.venue}/>
 											</div>
 											<div className={classes.inlineInfo}>
 												<div className={classes.subHeading}>When:</div>

@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 		width: '90px',
 		borderBottom: '1px solid',
 		borderTop: '1px solid',
+		marginRight: 10,
 	},
 	typography: {
 
@@ -64,7 +65,6 @@ const MenuListTime = (props) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpen(false);
   };
 
