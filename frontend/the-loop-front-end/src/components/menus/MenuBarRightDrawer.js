@@ -18,7 +18,6 @@ import LogoAlone from '../logos/Logo.js';
 import MenuListTime from './MenuListTime.js';
 import AmenityList from './AmenityList.js';
 import EventTypeList from './EventTypeList.js';
-// import MenuListType from './MenuListType.js';
 import { COLORS } from '../../styles/colors.js'
 
 const drawerWidth = 280;
