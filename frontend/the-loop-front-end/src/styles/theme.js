@@ -1,4 +1,5 @@
 import { createTheme } from '@material-ui/core/styles';
+import { COLORS } from './colors';
 
 export const theme = createTheme({
   palette: {
@@ -11,8 +12,6 @@ export const theme = createTheme({
   },
 	typography: {
     fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
       'Montserrat',
 			'Roboto',
       '"Segoe UI"',
@@ -26,5 +25,6 @@ export const theme = createTheme({
 		button: {
       textTransform: "none"
     },
+		color: COLORS.darkBlue,
   },
 });

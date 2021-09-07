@@ -5,23 +5,20 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { IconButton } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import FilterNoneIcon from '@material-ui/icons/FilterNone';
-import MailIcon from '@material-ui/icons/Mail';
 import { Button } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import LogoAlone from '../logos/Logo.js';
 import MenuListTime from './MenuListTime.js';
-import MenuListType from './MenuListType.js';
+import AmenityList from './AmenityList.js';
+import EventTypeList from './EventTypeList.js';
+// import MenuListType from './MenuListType.js';
 import { COLORS } from '../../styles/colors.js'
 
 const drawerWidth = 280;
@@ -62,7 +59,14 @@ const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-start',
+		height: '80px',
   },
+	drawerSubHeader: {
+		display: 'flex',
+		alignItems: 'center',
+		margin: '1rem 0 0 1rem',
+		color: COLORS.darkBlue,
+	},
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -81,8 +85,12 @@ const useStyles = makeStyles((theme) => ({
   },
 	caption: {
 		color: COLORS.darkBlue,
-		width: '100%',
-
+		overflow: 'hidden'
+	},
+	catchphrase: {
+		display: 'flex',
+		margin: '0 1rem 0 0',
+		alignItems: 'center',
 	},
 	toolbar: {
 		display: 'flex',
@@ -108,9 +116,9 @@ export default function MenuBarRightDrawer() {
     setOpen(false);
   };
 
-	const mediaQueryTest = useMediaQuery('(min-width: 600px)');
-	console.log(mediaQueryTest);
-
+	const catchphraseClosedDrawer = useMediaQuery('(min-width: 470px)');
+	const catchphraseOpenDrawer = useMediaQuery('(min-width: 680px)');
+	
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -122,21 +130,25 @@ export default function MenuBarRightDrawer() {
       >
         <Toolbar disableGutters className={classes.toolbar} >
 					<LogoAlone />
-						{(mediaQueryTest && <Typography variant={'h5'} className={classes.caption}>catchphrase</Typography> )}
-						<div className={classes.menuItems}>
-							<MenuListType />
-							<MenuListTime />
-							<Button
-								color="primary"
-								aria-label="open drawer"
-								edge="end"
-								onClick={handleDrawerOpen}
-								className={clsx(open && classes.hide)}
-								>
-								{/* Add feature to show the number of things selected using redux and other icons */}
-								<FilterNoneIcon />
-							</Button>
-						</div>
+					<div className={classes.menuItems}>
+						{( ((!open && catchphraseClosedDrawer) || (open && catchphraseOpenDrawer)) && 
+							<div className={classes.catchphrase}>
+								<Typography variant={'h6'} className={classes.caption}>find things to do:</Typography> 
+							</div>
+						)}
+						{/* <MenuListType /> */}
+						<MenuListTime />
+						<Button
+							color="primary"
+							aria-label="open drawer"
+							edge="end"
+							onClick={handleDrawerOpen}
+							className={clsx(open && classes.hide)}
+							>
+							{/* Add feature to show the number of things selected using redux and other icons */}
+							<FilterNoneIcon />
+						</Button>
+					</div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -152,26 +164,18 @@ export default function MenuBarRightDrawer() {
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
-					<Typography>amenities selected: 0</Typography>
+					<Typography variant={'h5'} className={classes.caption}>search filters (0)</Typography>
         </div>
         <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <MailIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <MailIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+					<div className={classes.drawerSubHeader}>
+						<Typography variant={'subtitle1'}>I'm looking for:</Typography>
+					</div>
+					<EventTypeList />
+				<Divider />
+					<div className={classes.drawerSubHeader}>
+						<Typography variant={'subtitle1'}>Must have:</Typography>
+					</div>
+	        <AmenityList />
       </Drawer>
     </div>
   );
