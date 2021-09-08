@@ -3,6 +3,7 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import ListItem from '@material-ui/core/ListItem';
 
 import { COLORS } from '../styles/colors.js'
 import DetailPop from './menus/DetailPop.js';
@@ -14,7 +15,6 @@ const useStyles = makeStyles({
 		color: COLORS.darkBlue,
   },
 	card: {
-		maxWidth: 375,
 		marginBottom: 5,
 	},
   bullet: {
@@ -68,6 +68,11 @@ const useStyles = makeStyles({
 
 export default function EventCard() {
   const classes = useStyles();
+	const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
 
 	const query = gql`
 		{
@@ -104,10 +109,15 @@ export default function EventCard() {
 			{({loading, error, data}) => {
             if (loading) return <p>Loading...</p>;
             if (error) return <p>I have a bad feeling about this...</p>
-						console.log(data);
+						// console.log(data);
             return data.allEvents.map((thing) => (
-                <Card className={classes.card} key={thing.id}>
-									<div className={classes.content}>
+                <ListItem
+									button
+									selected={selectedIndex === thing.id}
+									onClick={(event) => handleListItemClick(event, thing.id)}
+								>
+									<Card className={classes.card} key={thing.id}>
+										<div className={classes.content}>
 											<div className={classes.cardHeader}>
 												<div>
 													<div className={classes.type}>{thing.type[0].type}</div>
@@ -124,11 +134,9 @@ export default function EventCard() {
 												<div className={classes.subHeading}>When:</div>
 												<div className={classes.subInfo}>9:00pm - 12:30am</div>
 											</div>
-											{/* <Typography>Tix Required: {tixRequired}</Typography> */}
-											{/* <Typography>Tix Link: {tixLink}</Typography> */}
-											{/* <Typography>Description: {description}</Typography> */}
-									</div>
-								</Card>
+										</div>
+									</Card>
+								</ListItem>
                     
             ))
         }}

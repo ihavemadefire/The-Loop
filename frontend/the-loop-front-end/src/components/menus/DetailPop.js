@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
 	venueDetail: {
-		alignSelf: "end"
 	},
 	eventDetail: {
 	},
