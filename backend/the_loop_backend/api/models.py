@@ -37,7 +37,7 @@ class SubType(models.Model):
 class Place(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(null=True)
     short_description = models.TextField(null=True)
     phone_number = models.CharField(max_length=14)
     price_choices = [
