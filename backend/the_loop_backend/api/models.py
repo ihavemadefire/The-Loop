@@ -36,6 +36,7 @@ class SubType(models.Model):
 
 class Place(models.Model):
     name = models.CharField(max_length=100)
+    attribution = models.CharField(max_length=150, null=True)
     address = models.CharField(max_length=100)
     description = models.TextField()
     phone_number = models.CharField(max_length=14)
@@ -90,6 +91,7 @@ class TypeEvent(models.Model):
 
 class Event(models.Model):
     name = models.CharField(max_length=150)
+    attribution = models.CharField(max_length=150, null=True)
     type = ManyToManyField(TypeEvent)
     venue = models.ForeignKey(Place, on_delete=CASCADE)
     recurring = models.BooleanField()
