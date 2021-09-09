@@ -36,6 +36,7 @@ class SubType(models.Model):
 
 class Place(models.Model):
     name = models.CharField(max_length=100)
+    attribution = models.CharField(max_length=150, null=True)
     address = models.CharField(max_length=100)
     description = models.TextField(null=True)
     short_description = models.TextField(null=True)
@@ -52,6 +53,8 @@ class Place(models.Model):
     amenities = ManyToManyField(Amenity)
     type = models.ForeignKey(Type, on_delete=CASCADE)
     subtype = ManyToManyField(SubType)
+    lat = models.FloatField(default=36.1565497)
+    long = models.FloatField(default=-95.9950548)
     
     def __str__(self):
         return self.name
@@ -91,13 +94,14 @@ class TypeEvent(models.Model):
 
 class Event(models.Model):
     name = models.CharField(max_length=150)
+    attribution = models.CharField(max_length=150, null=True)
     type = ManyToManyField(TypeEvent)
     short_description = models.TextField(null=True)
     venue = models.ForeignKey(Place, on_delete=CASCADE)
-    recurring = models.BooleanField()
-    active = models.BooleanField()
-    description = models.TextField()
-    tix_required = models.BooleanField()
+    recurring = models.BooleanField(null=True)
+    active = models.BooleanField(null=True)
+    description = models.TextField(null=True)
+    tix_required = models.BooleanField(null=True)
     tix_link = models.URLField(null=True)
 
     def __str__(self):

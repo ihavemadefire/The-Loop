@@ -12,7 +12,7 @@ class DistrictType(DjangoObjectType):
 class PlaceType(DjangoObjectType):
     class Meta:
         model = Place
-        fields = ('id', 'name', 'address', 'description', 'phone_number', 'price',
+        fields = ('id', 'name', 'attribution', 'address', 'description', 'phone_number', 'price',
                   'district', 'amenities', 'open_now', 'type', 'subtype' )
 
 
@@ -43,7 +43,7 @@ class TimeType(DjangoObjectType):
 class EventType(DjangoObjectType):
     class Meta:
         model = Event
-        fields = ('id' ,'name', 'type', 'venue', 'recurring', 'active', 'description', 'tix_required', 'tix_link')
+        fields = ('id' ,'name', 'attribution', 'type', 'venue', 'recurring', 'active', 'description', 'tix_required', 'tix_link')
 
 
 class TypeEventType(DjangoObjectType):
