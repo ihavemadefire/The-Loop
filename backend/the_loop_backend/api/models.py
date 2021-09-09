@@ -37,7 +37,7 @@ class SubType(models.Model):
 class Place(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(null=True)
     phone_number = models.CharField(max_length=14)
     price_choices = [
         ('$', '$'),
@@ -92,10 +92,10 @@ class Event(models.Model):
     name = models.CharField(max_length=150)
     type = ManyToManyField(TypeEvent)
     venue = models.ForeignKey(Place, on_delete=CASCADE)
-    recurring = models.BooleanField()
-    active = models.BooleanField()
-    description = models.TextField()
-    tix_required = models.BooleanField()
+    recurring = models.BooleanField(null=True)
+    active = models.BooleanField(null=True)
+    description = models.TextField(null=True)
+    tix_required = models.BooleanField(null=True)
     tix_link = models.URLField(null=True)
 
     def __str__(self):
