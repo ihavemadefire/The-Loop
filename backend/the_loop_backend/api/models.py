@@ -38,6 +38,7 @@ class Place(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
     description = models.TextField()
+    short_description = models.TextField(null=True)
     phone_number = models.CharField(max_length=14)
     price_choices = [
         ('$', '$'),
@@ -91,6 +92,7 @@ class TypeEvent(models.Model):
 class Event(models.Model):
     name = models.CharField(max_length=150)
     type = ManyToManyField(TypeEvent)
+    short_description = models.TextField(null=True)
     venue = models.ForeignKey(Place, on_delete=CASCADE)
     recurring = models.BooleanField()
     active = models.BooleanField()
