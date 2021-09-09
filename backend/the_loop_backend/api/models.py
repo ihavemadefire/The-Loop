@@ -39,6 +39,7 @@ class Place(models.Model):
     attribution = models.CharField(max_length=150, null=True)
     address = models.CharField(max_length=100)
     description = models.TextField(null=True)
+    short_description = models.TextField(null=True)
     phone_number = models.CharField(max_length=14)
     price_choices = [
         ('$', '$'),
@@ -95,6 +96,7 @@ class Event(models.Model):
     name = models.CharField(max_length=150)
     attribution = models.CharField(max_length=150, null=True)
     type = ManyToManyField(TypeEvent)
+    short_description = models.TextField(null=True)
     venue = models.ForeignKey(Place, on_delete=CASCADE)
     recurring = models.BooleanField(null=True)
     active = models.BooleanField(null=True)
