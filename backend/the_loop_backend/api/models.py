@@ -52,6 +52,8 @@ class Place(models.Model):
     amenities = ManyToManyField(Amenity)
     type = models.ForeignKey(Type, on_delete=CASCADE)
     subtype = ManyToManyField(SubType)
+    lat = models.FloatField(default=36.1565497)
+    long = models.FloatField(default=-95.9950548)
     
     def __str__(self):
         return self.name
