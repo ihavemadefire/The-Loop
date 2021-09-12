@@ -2,20 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
-import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuBarRightDrawer from './menus/MenuBarRightDrawer.js';
 import { setTimeNow, setTimeAny, setTimeLater, setMainApp } from '../actions/index.js';
 import EventCard from './EventCard.js';
+import GoogMap from './map/GoogMap.js';
+
+const viewHeight = 'calc(100vh - 110px)'
 
 const useStyles = makeStyles({
 	container: {
 		marginTop: 90,
 	},
 	list: {
-		marginTop: 80,
-		maxWidth: 375,
-		maxHeight: 'calc(100vh - 130px)',
+		// marginTop: 80,
+		// width: 375,
+    minWidth: 350,
+    maxWidth: 375,
+		maxHeight: viewHeight,
 		overflow: 'auto',
 		zIndex: 1,
 		'&::-webkit-scrollbar': {
@@ -29,7 +33,14 @@ const useStyles = makeStyles({
 			backgroundColor: 'rgba(0,0,0,.1)',
 			// outline: '1px solid slategrey'
 		}
-	}
+	},
+  box: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: 80,
+    marginBottom: 0,
+    height: viewHeight
+  }
 })
 
 const MainApp = (props) => {
@@ -39,10 +50,11 @@ const MainApp = (props) => {
 		return (
 			<>
 				<MenuBarRightDrawer />
-        	<Box my={5}>
-							<List className={classes.list}>
-								<EventCard></EventCard>
-							</List>
+        	<Box className={classes.box} my={5}>
+						<List className={classes.list}>
+							<EventCard></EventCard>
+						</List>
+						<GoogMap />
         	</Box>
 
 			</>

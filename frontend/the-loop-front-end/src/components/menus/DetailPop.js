@@ -155,12 +155,12 @@ export default function DetailPop(props) {
 								</IconButton>
 							</div>
 							<div className={classes.shortDescription}>{props.details.description}</div>
-							{/* <div className={classes.inlineInfo}>
+							<div className={classes.inlineInfo}>
 								<div className={classes.subHeading}>Amenities:</div>
 								{ props.details.amenities.map((amenity) => (
 									<div key={amenity.id}>{amenity.amenity}</div>
 								)) }
-							</div> */}
+							</div>
 							<div className={classes.inlineInfo}>
 								<div className={classes.subHeading}>Address:</div>
 								<div className={classes.subInfo}>{props.details.address}</div>
