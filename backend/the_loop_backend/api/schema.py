@@ -13,7 +13,7 @@ class PlaceType(DjangoObjectType):
     class Meta:
         model = Place
         fields = ('id', 'name', 'attribution', 'short_description', 'address', 'description', 'phone_number', 'price',
-                  'district', 'amenities', 'open_now', 'type', 'subtype', 'lat', 'long' )
+                  'district', 'amenities', 'open_now', 'type', 'subtype', 'lat', 'long', 'image')
 
 
 class TypeType(DjangoObjectType):
@@ -43,7 +43,7 @@ class TimeType(DjangoObjectType):
 class EventType(DjangoObjectType):
     class Meta:
         model = Event
-        fields = ('id' ,'name', 'attribution', 'short_description', 'type', 'venue', 'recurring', 'active', 'description', 'tix_required', 'tix_link')
+        fields = ('id' ,'name', 'attribution', 'short_description', 'type', 'venue', 'recurring', 'active', 'description', 'tix_required', 'tix_link', 'image')
 
 
 class TypeEventType(DjangoObjectType):

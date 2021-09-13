@@ -55,6 +55,7 @@ class Place(models.Model):
     subtype = ManyToManyField(SubType)
     lat = models.FloatField(default=36.1565497)
     long = models.FloatField(default=-95.9950548)
+    image = models.URLField(null=True)
     
     def __str__(self):
         return self.name
@@ -103,6 +104,7 @@ class Event(models.Model):
     description = models.TextField(null=True)
     tix_required = models.BooleanField(null=True)
     tix_link = models.URLField(null=True)
+    image = models.URLField(null=True)
 
     def __str__(self):
         return self.name
