@@ -47,3 +47,17 @@ export const setMapHide = () => {
     type: 'HIDE_MAP'
   };
 };
+
+export const setCurrentData = (data) => {
+  return {
+    type: 'RESET_DATA',
+    payload: data
+  };
+};
+
+export const setHighlightedIndex = (index) => {
+  return {
+    type: 'SET_SELECTED_INDEX',
+    payload: index,
+  };
+};

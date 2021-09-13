@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 	venueDetail: {
 	},
 	eventDetail: {
+    marginLeft: 10,
 	},
 	card: {
 		maxWidth: 400,
@@ -74,7 +75,7 @@ export default function DetailPop(props) {
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-		console.log(props);
+		// console.log(props);
   };
 
   const handleClose = () => {

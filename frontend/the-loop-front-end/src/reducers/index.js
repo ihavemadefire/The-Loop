@@ -34,6 +34,20 @@ const showMapReducer = (showMapOverList = false, action) => {
     return false;
   }
 	return showMapOverList;
+};
+
+const currentDataSetReducer = (currentDataSet = null, action) => {
+  if (action.type === 'RESET_DATA') {
+    return action.payload;
+  }
+  return currentDataSet;
+};
+
+const selectedIndexReducer = (selectedIndex = 0, action) => {
+  if (action.type === 'SET_SELECTED_INDEX') {
+    return action.payload;
+  }
+  return selectedIndex;
 }
 
 export default combineReducers({
@@ -41,4 +55,6 @@ export default combineReducers({
 	timeFrame: timeFrameReducer,
 	searchType: searchTypeReducer,
   showMapOverList: showMapReducer,
+  currentDataSet: currentDataSetReducer,
+  selectedEventIndex: selectedIndexReducer,
 });

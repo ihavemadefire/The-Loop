@@ -1,8 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import GoogleMapReact from 'google-map-react';
-
-import { apiKey } from './api_key';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import IconButton from '@material-ui/core/IconButton';
+import { COLORS } from '../../styles/colors.js';
+import { apiKey } from './api_key2';
+import { setHighlightedIndex } from '../../actions/index.js';
 
 const useStyles = makeStyles({
   container: {
@@ -18,19 +22,46 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
+  locationIcon: {
+    //color: COLORS.regRed,
+  },
+  iconButton: {
+    color: COLORS.regRed,
+    opacity: 0.5,
+    '&:hover': {
+      opacity: 1,
+    }
+  },
+  selectedIconButton: {
+    color: COLORS.darkBlue,
+    opacity: 1,
+    '&:hover': {
+      opacity: 1,
+    }
+  },
 });
 
-const defaultProps = {
-  center: {
-    lat: 36.153982,
-    lng: -95.992775
-  },
-  zoom: 15
-};
 
-const GoogMap = () => {
+const GoogMap = (props) => {
   const classes = useStyles();
+
+  const defaultProps = {
+    center: {
+      lat: 36.153982,
+      lng: -95.992775
+    },
+    zoom: 15
+  };
+
+
+  const locationClickHandler = (e, eventId) => {
+    props.setHighlightedIndex(eventId);
+    props.changeSelection(eventId);
+  };
+
+  
+
 
   return (
     <div className={classes.container}>
@@ -39,9 +70,33 @@ const GoogMap = () => {
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}      
       >
+        {(props.currentData) &&
+          props.currentData.map((loopEvent) => (
+              <IconButton
+                className={(loopEvent.id === props.currentSelection) ? classes.selectedIconButton: classes.iconButton}
+                key={loopEvent.id}
+                color='secondary'
+                lat={loopEvent.venue.lat}
+                lng={loopEvent.venue.long}
+                size='small'
+                onClick={(e) => locationClickHandler(e, loopEvent.id)}
+              >
+                <LocationOnIcon 
+                  fontSize={(loopEvent.id === props.currentSelection) ? 'large': 'small'}
+                  className={classes.locationIcon}
+                ></LocationOnIcon>
+              </IconButton>
+        ))}
       </GoogleMapReact>
     </div>
-  )
-}
+  );
+};
 
-export default GoogMap;
+const mapStateToProps = (state) => {
+  return {
+    currentData: state.currentDataSet,
+    selectedEventIndex: state.selectedEventIndex
+  };
+};
+
+export default connect(mapStateToProps, { setHighlightedIndex })(GoogMap);

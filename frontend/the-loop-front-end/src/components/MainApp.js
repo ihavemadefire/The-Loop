@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
@@ -19,10 +19,6 @@ const useStyles = makeStyles({
     marginTop: 90,
 	},
 	list: {
-    // marginTop: 80,
-		// width: 375,
-    //minWidth: 350,
-    //maxWidth: 375,
 		maxHeight: viewHeight,
 		overflow: 'auto',
 		zIndex: 1,
@@ -56,6 +52,13 @@ const useStyles = makeStyles({
 
 const MainApp = (props) => {
   const classes = useStyles();
+  const [selectedEvent, setSelectedEvent] = useState(0);
+
+  const setSelectedEventHelper = (id) => {
+    setSelectedEvent(id)
+    console.log(`Called from eventCard regard id: ${id}`);
+  }
+
   const mapToggleButton = useMediaQuery('(max-width: 600px');
   const mapToggleDisplay = (e) => {
     if (props.showMapOverList) {
@@ -75,10 +78,10 @@ const MainApp = (props) => {
               width={mapToggleButton ? '100vw' : '400px'}
               style={props.showMapOverList ? {display: 'none'} : {}}
             >
-							<EventCard></EventCard>
+							<EventCard currentSelection={selectedEvent} changeSelection={(id) => setSelectedEventHelper(id)}></EventCard>
 						</List>
 						{ (props.showMapOverList || !mapToggleButton) &&
-              <GoogMap />
+              <GoogMap currentSelection={selectedEvent} changeSelection={(id) => setSelectedEventHelper(id)}/>
             }
             { mapToggleButton && 
               <Fab
@@ -107,6 +110,7 @@ const mapStateToProps = (state) => {
 		timeFrame: state.timeFrame,
 		showMainApp: state.showMain,
     showMapOverList: state.showMapOverList,
+    selectedEventIndex: state.selectedEventIndex
 	};
 };
 
