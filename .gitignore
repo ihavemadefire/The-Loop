@@ -42,3 +42,4 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
+frontend/the-loop-front-end/src/components/map/api_key2.js
