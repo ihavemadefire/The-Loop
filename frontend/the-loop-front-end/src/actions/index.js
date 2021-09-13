@@ -35,3 +35,15 @@ export const setPlaceSearch = () => {
 		type: 'SEARCH_FOR_PLACES'
 	};
 };
+
+export const setMapShow = () => {
+  return {
+    type: 'SHOW_MAP'
+  };
+};
+
+export const setMapHide = () => {
+  return {
+    type: 'HIDE_MAP'
+  };
+};

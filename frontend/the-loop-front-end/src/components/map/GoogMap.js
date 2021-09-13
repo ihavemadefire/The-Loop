@@ -1,12 +1,15 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
+import GoogleMapReact from 'google-map-react';
+
+import { apiKey } from './api_key';
 
 const useStyles = makeStyles({
   container: {
     width: '100%',
     height: '100%',
-    padding: '0 0 0 0'
+    padding: '0 0 0 0',
+    zIndex: 1,
   },
   temp: {
     backgroundColor: 'lightgreen',
@@ -18,13 +21,26 @@ const useStyles = makeStyles({
   }
 });
 
+const defaultProps = {
+  center: {
+    lat: 36.153982,
+    lng: -95.992775
+  },
+  zoom: 15
+};
+
 const GoogMap = () => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.container}>
-      <div className={classes.temp}>mapmamammamamamamp</div>
-    </Container>
+    <div className={classes.container}>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: apiKey }}
+        defaultCenter={defaultProps.center}
+        defaultZoom={defaultProps.zoom}      
+      >
+      </GoogleMapReact>
+    </div>
   )
 }
 

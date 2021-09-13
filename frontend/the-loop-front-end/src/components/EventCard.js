@@ -16,6 +16,7 @@ const useStyles = makeStyles({
   },
 	card: {
 		marginBottom: 5,
+    width: '100%',
 	},
   bullet: {
     display: 'inline-block',

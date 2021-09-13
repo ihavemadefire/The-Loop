@@ -25,10 +25,20 @@ const showMainAppReducer = (showMain = false, action) => {
 		return true;
 	}
 	return showMain;
+};
+
+const showMapReducer = (showMapOverList = false, action) => {
+	if (action.type === 'SHOW_MAP') {
+		return true;
+	} else if (action.type === 'HIDE_MAP') {
+    return false;
+  }
+	return showMapOverList;
 }
 
 export default combineReducers({
 	showMain: showMainAppReducer,
 	timeFrame: timeFrameReducer,
 	searchType: searchTypeReducer,
+  showMapOverList: showMapReducer,
 });
