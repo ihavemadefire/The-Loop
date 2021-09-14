@@ -98,15 +98,15 @@ export default function DetailPop(props) {
 					details
 				</Button>
 			}
-			{ props.detailType === 'venue' &&
-				<Link
-					color="secondary"
-					href="#"
-					onClick={handleClick}
-				>
-					{props.details.name}
-				</Link>
-			}
+      { props.detailType === 'venue' &&
+        <Link
+          color="secondary"
+          href="#"
+          onClick={handleClick}
+        >
+          {props.details.name}
+        </Link>
+      }
       <Popover
         id={id}
         open={open}

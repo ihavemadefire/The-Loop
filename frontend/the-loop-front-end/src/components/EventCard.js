@@ -16,10 +16,16 @@ const useStyles = makeStyles({
     minWidth: 275,
 		color: COLORS.darkBlue,
   },
+  selected: {
+    backgroundColor: 'blue'
+  },
 	card: {
-		marginBottom: 5,
     width: '100%',
 	},
+  cardSelected: {
+    border: `1px solid ${COLORS.darkBlue}`,
+    width: '100%'
+  },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
@@ -135,8 +141,6 @@ const EventCard = (props) => {
     )
   };
 
-  //searchParams.includes(loopEvent.type[0].type.toLowerCase())
-
   const {loading, error, data } = useQuery(query);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>No results for search parameters...</p>
@@ -154,7 +158,10 @@ const EventCard = (props) => {
           key={loopEvent.id}
           onClick={(event) => handleListItemClick(event, loopEvent.id)}
         >
-          <Card className={classes.card} key={loopEvent.id}>
+          <Card 
+            className={(selectedIndex === loopEvent.id) ? classes.cardSelected : classes.card}
+            key={loopEvent.id}
+          >
             <div className={classes.content}>
               <div className={classes.cardHeader}>
                 <div>
