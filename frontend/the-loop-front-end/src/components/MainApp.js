@@ -19,7 +19,11 @@ const useStyles = makeStyles({
     marginTop: 90,
 	},
 	list: {
-		maxHeight: viewHeight,
+    minWidth: '400px',
+    '@media (max-width: 400px)': {
+      minWidth: '0px',
+    },
+    maxHeight: viewHeight,
 		overflow: 'auto',
 		zIndex: 1,
 		'&::-webkit-scrollbar': {
@@ -34,6 +38,12 @@ const useStyles = makeStyles({
 			// outline: '1px solid slategrey'
 		}
 	},
+  listMapHidden: {
+    margin: '0 auto 0 auto'
+  },
+  listMapShown: {
+
+  },
   box: {
     display: 'flex',
     flexDirection: 'row',
@@ -81,8 +91,7 @@ const MainApp = (props) => {
         />
         <Box className={classes.box} my={5}>
           <List
-            className={classes.list}
-            width={mapToggleButton ? '100vw' : '400px'}
+            className={`${mapToggleButton ? classes.listMapHidden : classes.listMapShown} ${classes.list}`}
             style={props.showMapOverList ? {display: 'none'} : {}}
           >
             <EventCard 

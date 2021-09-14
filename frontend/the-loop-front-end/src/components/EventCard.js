@@ -16,8 +16,8 @@ const useStyles = makeStyles({
     minWidth: 275,
 		color: COLORS.darkBlue,
   },
-  selected: {
-    backgroundColor: 'blue'
+  listItem: {
+    width: '100%'
   },
 	card: {
     width: '100%',
@@ -143,17 +143,16 @@ const EventCard = (props) => {
 
   const {loading, error, data } = useQuery(query);
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>No results for search parameters...</p>
+  if (error) return <NoResultsHelper />
   
   props.setCurrentData(data.allEvents);
 
   return data.allEvents.map((loopEvent) => {
-    console.log(`Initial search params: ${searchParams}`);
-      console.log(`${searchParams}.length > 0`);
     if (searchParams.includes(loopEvent.type[0].type.toLowerCase()) || searchParams.length === 0) {
       return (
         <ListItem
           button
+          className={classes.listItem}
           selected={selectedIndex === loopEvent.id}
           key={loopEvent.id}
           onClick={(event) => handleListItemClick(event, loopEvent.id)}
