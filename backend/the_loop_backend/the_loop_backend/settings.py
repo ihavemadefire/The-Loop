@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     'admin_reorder',
     'graphene_django',
     'corsheaders',
-    "django_filters",
 ]
 
 MIDDLEWARE = [
