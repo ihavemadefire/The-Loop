@@ -61,3 +61,23 @@ export const setHighlightedIndex = (index) => {
     payload: index,
   };
 };
+
+export const setEventTypeFilterList = (data) => {
+  return {
+    type: 'SET_EVENT_TYPE_FILTERS',
+    payload: data,
+  };
+};
+
+export const addEventTypeFilterList = (data) => {
+  return {
+    type: 'ADD_EVENT_TYPE_FILTERS',
+    payload: data,
+  };
+};
+
+export const delEventTypeFilterList = () => {
+  return {
+    type: 'DEL_EVENT_TYPE_FILTERS',
+  };
+};

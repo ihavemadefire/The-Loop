@@ -53,10 +53,15 @@ const useStyles = makeStyles({
 const MainApp = (props) => {
   const classes = useStyles();
   const [selectedEvent, setSelectedEvent] = useState(0);
+  const [eventSearchParams, setEventSearchParams] = useState(props.eventTypeFilters)
 
   const setSelectedEventHelper = (id) => {
     setSelectedEvent(id)
-    console.log(`Called from eventCard regard id: ${id}`);
+    //console.log(`Called from eventCard regard id: ${id}`);
+  }
+
+  const setEventSearchParamsHelper = (checked) => {
+    setEventSearchParams(checked)
   }
 
   const mapToggleButton = useMediaQuery('(max-width: 600px');
@@ -71,31 +76,40 @@ const MainApp = (props) => {
 	if (props.showMainApp) {
     return (
       <>
-				<MenuBarRightDrawer />
-        	<Box className={classes.box} my={5}>
-						<List
-              className={classes.list}
-              width={mapToggleButton ? '100vw' : '400px'}
-              style={props.showMapOverList ? {display: 'none'} : {}}
-            >
-							<EventCard currentSelection={selectedEvent} changeSelection={(id) => setSelectedEventHelper(id)}></EventCard>
-						</List>
-						{ (props.showMapOverList || !mapToggleButton) &&
-              <GoogMap currentSelection={selectedEvent} changeSelection={(id) => setSelectedEventHelper(id)}/>
-            }
-            { mapToggleButton && 
-              <Fab
-              color="primary"
-              variant="extended"
-              className={classes.mapToggle}
-              onClick={(e) => mapToggleDisplay()}
+				<MenuBarRightDrawer 
+          updateSearchParams={(checked) => setEventSearchParamsHelper(checked)}
+        />
+        <Box className={classes.box} my={5}>
+          <List
+            className={classes.list}
+            width={mapToggleButton ? '100vw' : '400px'}
+            style={props.showMapOverList ? {display: 'none'} : {}}
+          >
+            <EventCard 
+              currentSelection={selectedEvent}
+              eventSearchParams={eventSearchParams}
+              changeSelection={(id) => setSelectedEventHelper(id)}
               >
-                <NavigationIcon className={classes.navIcon} />
-                show map
-              </Fab>
-            }
-          </Box>
-
+            </EventCard>
+          </List>
+          { (props.showMapOverList || !mapToggleButton) &&
+            <GoogMap 
+              currentSelection={selectedEvent} 
+              changeSelection={(id) => setSelectedEventHelper(id)}
+              />
+          }
+          { mapToggleButton && 
+            <Fab
+            color="primary"
+            variant="extended"
+            className={classes.mapToggle}
+            onClick={(e) => mapToggleDisplay()}
+            >
+              <NavigationIcon className={classes.navIcon} />
+              show map
+            </Fab>
+          }
+        </Box>
 			</>
 		)
 			
@@ -110,7 +124,8 @@ const mapStateToProps = (state) => {
 		timeFrame: state.timeFrame,
 		showMainApp: state.showMain,
     showMapOverList: state.showMapOverList,
-    selectedEventIndex: state.selectedEventIndex
+    selectedEventIndex: state.selectedEventIndex,
+    eventTypeFilters: state.eventTypeFilters
 	};
 };
 

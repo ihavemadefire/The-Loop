@@ -48,6 +48,21 @@ const selectedIndexReducer = (selectedIndex = 0, action) => {
     return action.payload;
   }
   return selectedIndex;
+};
+
+const eventTypeFilterListReducer = (eventTypeFilters = [], action) => {
+  if (action.type === 'SET_EVENT_TYPE_FILTERS') {
+      return ['concerts', 'live music', 'community events', 'art and museums', 'live sports', 'activities', 'happy hours'];
+  } else if (action.type === 'ADD_EVENT_TYPE_FILTERS') {
+      const newFilters = action.payload;
+      if (newFilters[0] === 0) {
+        newFilters.splice(0, 1);
+      }
+      return newFilters;
+  } else if (action.type === 'DEL_EVENT_TYPE_FILTERS') {
+      return [];
+  }
+  return eventTypeFilters;
 }
 
 export default combineReducers({
@@ -57,4 +72,5 @@ export default combineReducers({
   showMapOverList: showMapReducer,
   currentDataSet: currentDataSetReducer,
   selectedEventIndex: selectedIndexReducer,
+  eventTypeFilters: eventTypeFilterListReducer,
 });

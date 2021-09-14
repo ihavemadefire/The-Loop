@@ -16,7 +16,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import LogoAlone from '../logos/Logo.js';
 import MenuListTime from './MenuListTime.js';
-import AmenityList from './AmenityList.js';
+// import AmenityList from './AmenityList.js';
 import EventTypeList from './EventTypeList.js';
 import { COLORS } from '../../styles/colors.js'
 
@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function MenuBarRightDrawer() {
+export default function MenuBarRightDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -169,12 +169,13 @@ export default function MenuBarRightDrawer() {
 					<div className={classes.drawerSubHeader}>
 						<Typography variant={'subtitle1'}>I'm looking for:</Typography>
 					</div>
-					<EventTypeList />
-				<Divider />
+					<EventTypeList updateSearchParams={(checked) => props.updateSearchParams(checked)}/>
+				{/* To be added later
+        <Divider />
 					<div className={classes.drawerSubHeader}>
 						<Typography variant={'subtitle1'}>Must have:</Typography>
 					</div>
-	        <AmenityList />
+	        <AmenityList /> */}
       </Drawer>
     </div>
   );
