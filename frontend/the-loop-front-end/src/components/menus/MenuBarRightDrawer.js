@@ -136,7 +136,7 @@ export default function MenuBarRightDrawer(props) {
 							</div>
 						)}
 						{/* <MenuListType /> */}
-						<MenuListTime />
+						<MenuListTime updateTimeParam={(param) => props.updateTimeParam(param)}/>
 						<Button
 							color="primary"
 							aria-label="open drawer"

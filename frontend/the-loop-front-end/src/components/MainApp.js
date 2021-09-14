@@ -63,15 +63,19 @@ const useStyles = makeStyles({
 const MainApp = (props) => {
   const classes = useStyles();
   const [selectedEvent, setSelectedEvent] = useState(0);
-  const [eventSearchParams, setEventSearchParams] = useState(props.eventTypeFilters)
+  const [eventSearchParams, setEventSearchParams] = useState(props.eventTypeFilters);
+  const [eventTimeParam, setEventTimeParam] = useState('now');
 
   const setSelectedEventHelper = (id) => {
     setSelectedEvent(id)
-    //console.log(`Called from eventCard regard id: ${id}`);
   }
 
   const setEventSearchParamsHelper = (checked) => {
     setEventSearchParams(checked)
+  };
+
+  const setEventTimeHelper = (param) => {
+    setEventTimeParam(param);
   }
 
   const mapToggleButton = useMediaQuery('(max-width: 600px');
@@ -88,6 +92,7 @@ const MainApp = (props) => {
       <>
 				<MenuBarRightDrawer 
           updateSearchParams={(checked) => setEventSearchParamsHelper(checked)}
+          updateTimeParam={(param) => setEventTimeHelper(param)}
         />
         <Box className={classes.box} my={5}>
           <List
@@ -97,6 +102,7 @@ const MainApp = (props) => {
             <EventCard 
               currentSelection={selectedEvent}
               eventSearchParams={eventSearchParams}
+              eventTimeParam={eventTimeParam}
               changeSelection={(id) => setSelectedEventHelper(id)}
               >
             </EventCard>
@@ -109,10 +115,10 @@ const MainApp = (props) => {
           }
           { mapToggleButton && 
             <Fab
-            color="primary"
-            variant="extended"
-            className={classes.mapToggle}
-            onClick={(e) => mapToggleDisplay()}
+              color="primary"
+              variant="extended"
+              className={classes.mapToggle}
+              onClick={(e) => mapToggleDisplay()}
             >
               <NavigationIcon className={classes.navIcon} />
               show map

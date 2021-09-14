@@ -57,15 +57,16 @@ const MenuListTime = (props) => {
 		if (selection === 'now') {
 			props.setTimeNow();
 		} else if (selection === 'later') {
-			props.setTimeLater();
+      props.setTimeLater();
 		} else if (selection === 'anytime') {
-			props.setTimeAny();
+      props.setTimeAny();
 		}
-
+    
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
     setOpen(false);
+    props.updateTimeParam(selection)
   };
 
   function handleListKeyDown(event) {

@@ -9,6 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import { COLORS } from '../styles/colors.js'
 import DetailPop from './menus/DetailPop.js';
 import { setCurrentData, setHighlightedIndex } from '../actions/index.js';
+import { PossibleTypeExtensions } from 'graphql/validation/rules/PossibleTypeExtensions';
 
 
 const useStyles = makeStyles({
@@ -88,9 +89,12 @@ const EventCard = (props) => {
   }, [props.currentSelection]);
 
   useEffect(() => {
-    //console.log(`Search params: ${props.eventSearchParams}`);
     setSearchParams(props.eventSearchParams);
   }, [props.eventSearchParams])
+
+  useEffect(() => {
+    console.log(`EventCard timeframe: ${props.eventTimeParam}`)
+  }, [props.eventTimeParam])
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -107,6 +111,8 @@ const EventCard = (props) => {
 					type
 				}
 				description
+        shortDescription
+        when
 				venue {
 					id
 					name
@@ -149,6 +155,37 @@ const EventCard = (props) => {
 
   return data.allEvents.map((loopEvent) => {
     if (searchParams.includes(loopEvent.type[0].type.toLowerCase()) || searchParams.length === 0) {
+      const currentTime = new Date();
+      const eventTime = new Date(loopEvent.when)
+      const eventDay = eventTime.toDateString();
+      const today = currentTime.toDateString();
+      const eventStartTime = eventTime.toTimeString();
+      const timeNow = currentTime.toTimeString();
+      const timeParam = props.eventTimeParam;
+
+      console.log(`Now:     ${currentTime.toTimeString()}`);
+      console.log(`Event:   ${eventTime.toTimeString()}`);
+      console.log(`Is it going on now: ${eventStartTime < timeNow}`);
+      console.log(`Now:     ${currentTime.toDateString()}`);
+      console.log(`Event:   ${eventTime.toDateString()}`);
+      console.log(`Is date today: ${eventDay === today}`);
+      console.log(`Is date today or later: ${eventDay >= today}`);
+      console.log(`Time period: ${props.eventTimeParam}`)
+      
+      if (timeParam === 'anytime') {
+        if (eventDay < today) return null;
+      };
+
+      if (timeParam === 'now') {
+        if (eventDay !== today || eventStartTime > timeNow) {
+          return null;
+        }
+      };
+      
+      if (timeParam === 'later') {
+        if (eventDay !== today) return null;
+      }
+      
       return (
         <ListItem
           button
