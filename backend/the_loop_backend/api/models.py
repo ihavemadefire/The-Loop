@@ -4,7 +4,7 @@ from django.db.models.deletion import CASCADE
 from django.db.models.expressions import Case
 from django.db.models.fields import CharField
 from django.db.models.fields.related import ManyToManyField
-
+from datetime import datetime
 
 class District(models.Model):
     district = models.CharField(max_length=25)
@@ -100,6 +100,7 @@ class Event(models.Model):
     short_description = models.TextField(null=True)
     venue = models.ForeignKey(Place, on_delete=CASCADE)
     recurring = models.BooleanField(null=True)
+    when = models.DateTimeField(default=datetime.now)
     active = models.BooleanField(null=True)
     description = models.TextField(null=True)
     tix_required = models.BooleanField(null=True)
