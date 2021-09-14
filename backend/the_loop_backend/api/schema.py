@@ -2,6 +2,7 @@ from django.db.models import fields
 import graphene
 from graphene_django import DjangoObjectType, DjangoListField
 from .models import *
+from graphene import relay
 
 
 class DistrictType(DjangoObjectType):
@@ -63,9 +64,11 @@ class Query(graphene.ObjectType):
     all_events = graphene.List(EventType)
     one_place = graphene.Field(PlaceType, id=graphene.Int())
     one_event = graphene.Field(EventType, id=graphene.Int())
-    
+    all_times = graphene.List(TimeType)
+    all_times_place = graphene.List(TimeType, id=graphene.ID())
+
     def resolve_all_places(self, info):
-        return Place.objects.all()
+        return Place.objects.order_by('id')
 
     def resolve_all_events(self, info):
         return Event.objects.all()
@@ -75,5 +78,12 @@ class Query(graphene.ObjectType):
     
     def resolve_one_event(self, info, id):
         return Event.objects.get(pk=id)
-        
+
+    def resolve_all_times(self, info):
+        return Time.objects.all()
+
+    def resolve_all_times_place(self, info, id):
+        return Time.objects.filter(place=id)
+
+
 schema = graphene.Schema(query=Query)
