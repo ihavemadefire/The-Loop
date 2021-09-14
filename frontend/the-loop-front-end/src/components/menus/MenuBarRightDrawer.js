@@ -163,7 +163,7 @@ export default function MenuBarRightDrawer(props) {
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
-					<Typography variant={'h5'} className={classes.caption}>search filters (0)</Typography>
+					<Typography variant={'h5'} className={classes.caption}>refine search</Typography>
         </div>
         <Divider />
 					<div className={classes.drawerSubHeader}>
