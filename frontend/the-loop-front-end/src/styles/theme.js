@@ -12,6 +12,7 @@ export const theme = createTheme({
   },
 	typography: {
     fontFamily: [
+      'Poppins',
       'Montserrat',
 			'Roboto',
       '"Segoe UI"',
