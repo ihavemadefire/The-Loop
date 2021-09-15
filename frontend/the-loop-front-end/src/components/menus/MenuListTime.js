@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 	button: {
 		flexShrink: 0,
 		whiteSpace: 'nowrap',
-		width: '90px',
+		//width: '90px',
 		borderBottom: '1px solid',
 		borderTop: '1px solid',
 		marginRight: 10,
@@ -43,30 +43,36 @@ const MenuListTime = (props) => {
 
   const currentTime = () => {
 		if (props.timeFrame === 'now') {
-			return 'now';
+			return now;
 		} else if (props.timeFrame === 'any') {
-			return 'anytime';
+			return any;
 		} else if (props.timeFrame === 'later') {
-			return 'later';
+			return later;
 		}
 	};
+
+  const now = 'happening now';
+  const later = 'now and later';
+  const any = 'for whenever';
 
 	const handleClose = (event) => {
 
 		const selection = event.target.firstChild.data;
-		if (selection === 'now') {
+		if (selection === now) {
 			props.setTimeNow();
-		} else if (selection === 'later') {
+      props.updateTimeParam('now')
+		} else if (selection === later) {
       props.setTimeLater();
-		} else if (selection === 'anytime') {
+      props.updateTimeParam('later')
+		} else if (selection === any) {
       props.setTimeAny();
+      props.updateTimeParam('anytime')
 		}
     
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
     setOpen(false);
-    props.updateTimeParam(selection)
   };
 
   function handleListKeyDown(event) {
@@ -107,9 +113,9 @@ const MenuListTime = (props) => {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>now</MenuItem>
-                    <MenuItem onClick={handleClose}>later</MenuItem>
-                    <MenuItem onClick={handleClose}>anytime</MenuItem>
+                    <MenuItem onClick={handleClose}>{now}</MenuItem>
+                    <MenuItem onClick={handleClose}>{later}</MenuItem>
+                    <MenuItem onClick={handleClose}>{any}</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

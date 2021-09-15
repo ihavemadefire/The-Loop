@@ -9,7 +9,6 @@ import ListItem from '@material-ui/core/ListItem';
 import { COLORS } from '../styles/colors.js'
 import DetailPop from './menus/DetailPop.js';
 import { setCurrentData, setHighlightedIndex } from '../actions/index.js';
-import { PossibleTypeExtensions } from 'graphql/validation/rules/PossibleTypeExtensions';
 
 
 const useStyles = makeStyles({
@@ -93,7 +92,7 @@ const EventCard = (props) => {
   }, [props.eventSearchParams])
 
   useEffect(() => {
-    console.log(`EventCard timeframe: ${props.eventTimeParam}`)
+    //console.log(`EventCard timeframe: ${props.eventTimeParam}`)
   }, [props.eventTimeParam])
 
   const handleListItemClick = (event, index) => {
@@ -147,6 +146,25 @@ const EventCard = (props) => {
     )
   };
 
+  const dayFormatter = (time) => {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const today = new Date();
+    const todayFlair = 'TODAY!';
+    const dayIsToday = (time.toDateString() === today.toDateString())
+    const dayString = `${days[time.getDay()]} ${month[time.getMonth()]} ${time.getDate()}`
+    return (dayIsToday ? todayFlair : dayString);
+  };
+
+  const timeFormatter = (time) => {
+    const today = new Date();
+    const startedFlair = 'Going on now!';
+    const dayIsToday = (time.toDateString() === today.toDateString())
+    const timeString = `${time.toLocaleTimeString()}`
+    return timeString;
+    
+  };
+
   const {loading, error, data } = useQuery(query);
   if (loading) return <p>Loading...</p>;
   if (error) return <NoResultsHelper />
@@ -171,9 +189,9 @@ const EventCard = (props) => {
       // console.log(`Is date today: ${eventDay === today}`);
       // console.log(`Is date today or later: ${eventDay >= today}`);
       // console.log(`Time period: ${props.eventTimeParam}`)
-      console.log(loopEvent);
+      // console.log(loopEvent);
       if (timeParam === 'anytime') {
-        if (eventDay < today) return null;
+        if (eventTime.getTime() < currentTime.getTime()) return null;
       };
 
       if (timeParam === 'now') {
@@ -214,7 +232,13 @@ const EventCard = (props) => {
               <div className={classes.inlineInfo}>
                 <div className={classes.subHeading}>When:</div>
                 <div className={classes.subInfo}>
-                  {eventDay}
+                  {dayFormatter(eventTime)}
+                </div>
+              </div>
+              <div className={classes.inlineInfo}>
+                <div className={classes.subHeading}>Starts at:</div>
+                <div className={classes.subInfo}>
+                  {timeFormatter(eventTime)}
                 </div>
               </div>
             </div>
