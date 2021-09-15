@@ -157,12 +157,11 @@ const EventCard = (props) => {
   };
 
   const timeFormatter = (time) => {
-    const today = new Date();
-    const startedFlair = 'Going on now!';
-    const dayIsToday = (time.toDateString() === today.toDateString())
+    //const today = new Date();
+    //const startedFlair = 'Going on now!';
+    //const dayIsToday = (time.toDateString() === today.toDateString())
     const timeString = `${time.toLocaleTimeString()}`
     return timeString;
-    
   };
 
   const {loading, error, data } = useQuery(query);
@@ -236,7 +235,9 @@ const EventCard = (props) => {
                 </div>
               </div>
               <div className={classes.inlineInfo}>
-                <div className={classes.subHeading}>Starts at:</div>
+                <div className={classes.subHeading}>
+                  {timeParam === 'now' ? 'Started at:' : 'Starts at:'}
+                </div>
                 <div className={classes.subInfo}>
                   {timeFormatter(eventTime)}
                 </div>
