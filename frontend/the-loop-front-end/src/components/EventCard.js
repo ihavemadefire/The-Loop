@@ -163,15 +163,15 @@ const EventCard = (props) => {
       const timeNow = currentTime.toTimeString();
       const timeParam = props.eventTimeParam;
 
-      console.log(`Now:     ${currentTime.toTimeString()}`);
-      console.log(`Event:   ${eventTime.toTimeString()}`);
-      console.log(`Is it going on now: ${eventStartTime < timeNow}`);
-      console.log(`Now:     ${currentTime.toDateString()}`);
-      console.log(`Event:   ${eventTime.toDateString()}`);
-      console.log(`Is date today: ${eventDay === today}`);
-      console.log(`Is date today or later: ${eventDay >= today}`);
-      console.log(`Time period: ${props.eventTimeParam}`)
-      
+      // console.log(`Now:     ${currentTime.toTimeString()}`);
+      // console.log(`Event:   ${eventTime.toTimeString()}`);
+      // console.log(`Is it going on now: ${eventStartTime < timeNow}`);
+      // console.log(`Now:     ${currentTime.toDateString()}`);
+      // console.log(`Event:   ${eventTime.toDateString()}`);
+      // console.log(`Is date today: ${eventDay === today}`);
+      // console.log(`Is date today or later: ${eventDay >= today}`);
+      // console.log(`Time period: ${props.eventTimeParam}`)
+      console.log(loopEvent);
       if (timeParam === 'anytime') {
         if (eventDay < today) return null;
       };
@@ -179,12 +179,12 @@ const EventCard = (props) => {
       if (timeParam === 'now') {
         if (eventDay !== today || eventStartTime > timeNow) {
           return null;
-        }
+        };
       };
       
       if (timeParam === 'later') {
         if (eventDay !== today) return null;
-      }
+      };
       
       return (
         <ListItem
@@ -206,14 +206,16 @@ const EventCard = (props) => {
                 </div>
                 <DetailPop detailType='event' venue={loopEvent}/>
               </div>
-              <div className={classes.shortDescription}>Short description describing what this thing is.</div>
+              <div className={classes.shortDescription}>{loopEvent.shortDescription}</div>
               <div className={classes.inlineInfo}>
                 <div className={classes.subHeading}>Where:</div>
                 <DetailPop detailType='venue' details={loopEvent.venue}/>
               </div>
               <div className={classes.inlineInfo}>
                 <div className={classes.subHeading}>When:</div>
-                <div className={classes.subInfo}>9:00pm - 12:30am</div>
+                <div className={classes.subInfo}>
+                  {eventDay}
+                </div>
               </div>
             </div>
           </Card>
