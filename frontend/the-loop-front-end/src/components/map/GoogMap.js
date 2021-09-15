@@ -70,8 +70,8 @@ const GoogMap = (props) => {
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}      
       >
-        {(props.currentData) &&
-          props.currentData.map((loopEvent) => (
+        {(props.resultsData) &&
+          props.resultsData.map((loopEvent) => (
               <IconButton
                 className={(loopEvent.id === props.currentSelection) ? classes.selectedIconButton: classes.iconButton}
                 key={loopEvent.id}
@@ -95,7 +95,8 @@ const GoogMap = (props) => {
 const mapStateToProps = (state) => {
   return {
     currentData: state.currentDataSet,
-    selectedEventIndex: state.selectedEventIndex
+    selectedEventIndex: state.selectedEventIndex,
+    resultsData: state.resultsData,
   };
 };
 

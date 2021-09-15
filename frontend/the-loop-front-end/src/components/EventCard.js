@@ -8,7 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 
 import { COLORS } from '../styles/colors.js'
 import DetailPop from './menus/DetailPop.js';
-import { setCurrentData, setHighlightedIndex } from '../actions/index.js';
+import { setCurrentData, setHighlightedIndex, clearResultsData, addResultsData } from '../actions/index.js';
 
 
 const useStyles = makeStyles({
@@ -172,6 +172,7 @@ const EventCard = (props) => {
   if (error) return <NoResultsHelper />
   
   props.setCurrentData(data.allEvents);
+  props.clearResultsData();
 
   return data.allEvents.map((loopEvent) => {
     if (searchParams.includes(loopEvent.type[0].type.toLowerCase()) || searchParams.length === 0) {
@@ -182,7 +183,6 @@ const EventCard = (props) => {
       const eventStartTime = eventTime.toTimeString();
       const timeNow = currentTime.toTimeString();
       const timeParam = props.eventTimeParam;
-
       // console.log(`Now:     ${currentTime.toTimeString()}`);
       // console.log(`Event:   ${eventTime.toTimeString()}`);
       // console.log(`Is it going on now: ${eventStartTime < timeNow}`);
@@ -206,6 +206,7 @@ const EventCard = (props) => {
         if (eventDay !== today) return null;
       };
       
+      props.addResultsData(loopEvent);
       return (
         <ListItem
           button
@@ -258,4 +259,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setCurrentData, setHighlightedIndex })(EventCard);
+export default connect(mapStateToProps, { setCurrentData, setHighlightedIndex, clearResultsData, addResultsData})(EventCard);
