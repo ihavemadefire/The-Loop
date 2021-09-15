@@ -156,11 +156,14 @@ const EventCard = (props) => {
     return (dayIsToday ? todayFlair : dayString);
   };
 
-  const timeFormatter = (time) => {
-    //const today = new Date();
-    //const startedFlair = 'Going on now!';
-    //const dayIsToday = (time.toDateString() === today.toDateString())
-    const timeString = `${time.toLocaleTimeString()}`
+  const timeFormatter = (eventStartTime) => {
+    const today = new Date();
+    const startedFlair = ` (started at ${eventStartTime.toLocaleTimeString()})`;
+    const dayIsToday = (eventStartTime.toDateString() === today.toDateString())
+    if (dayIsToday && (eventStartTime.getTime() < today.getTime())) {
+      return startedFlair;
+    } 
+    const timeString = ` - ${eventStartTime.toLocaleTimeString()}`
     return timeString;
   };
 
@@ -231,15 +234,7 @@ const EventCard = (props) => {
               <div className={classes.inlineInfo}>
                 <div className={classes.subHeading}>When:</div>
                 <div className={classes.subInfo}>
-                  {dayFormatter(eventTime)}
-                </div>
-              </div>
-              <div className={classes.inlineInfo}>
-                <div className={classes.subHeading}>
-                  {timeParam === 'now' ? 'Started at:' : 'Starts at:'}
-                </div>
-                <div className={classes.subInfo}>
-                  {timeFormatter(eventTime)}
+                  {dayFormatter(eventTime)}{timeFormatter(eventTime)}
                 </div>
               </div>
             </div>

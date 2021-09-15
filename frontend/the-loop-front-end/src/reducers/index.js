@@ -7,7 +7,9 @@ const timeFrameReducer = (timeFrame = 'now', action) => {
 		return 'any';
 	} else if (action.type === 'TIME_LATER_SELECTED') {
 		return 'later';
-	}
+	} else if (action.type === 'TIME_ALL_SELECTED') {
+    return 'all';
+  }
 	return timeFrame;
 };
 

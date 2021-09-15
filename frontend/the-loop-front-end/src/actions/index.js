@@ -18,6 +18,12 @@ export const setTimeLater = () => {
 	};
 };
 
+export const setTimeAll = () => {
+	return {
+		type: 'TIME_ALL_SELECTED'
+	};
+};
+
 export const setMainApp = () => {
 	return {
 		type: 'SHOW_MAIN_APP'

@@ -9,7 +9,7 @@ import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { setTimeNow, setTimeAny, setTimeLater } from '../../actions';
+import { setTimeNow, setTimeAny, setTimeLater, setTimeAll } from '../../actions';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,12 +48,15 @@ const MenuListTime = (props) => {
 			return any;
 		} else if (props.timeFrame === 'later') {
 			return later;
-		}
+		} else if (props.timeFrame === 'all') {
+      return allThings;
+    }
 	};
 
   const now = 'happening now';
-  const later = 'now and later';
-  const any = 'for whenever';
+  const later = 'happening today';
+  const any = 'for the future';
+  const allThings = 'show it all';
 
 	const handleClose = (event) => {
 
@@ -67,7 +70,10 @@ const MenuListTime = (props) => {
 		} else if (selection === any) {
       props.setTimeAny();
       props.updateTimeParam('anytime')
-		}
+		} else if (selection === allThings) {
+      props.setTimeAll();
+      props.updateTimeParam('all');
+    }
     
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
@@ -116,6 +122,7 @@ const MenuListTime = (props) => {
                     <MenuItem onClick={handleClose}>{now}</MenuItem>
                     <MenuItem onClick={handleClose}>{later}</MenuItem>
                     <MenuItem onClick={handleClose}>{any}</MenuItem>
+                    <MenuItem onClick={handleClose}>{allThings}</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -131,4 +138,4 @@ const mapStateToProps = (state) => {
 	return { timeFrame: state.timeFrame };
 };
 
-export default connect(mapStateToProps, { setTimeAny, setTimeNow, setTimeLater })(MenuListTime);
+export default connect(mapStateToProps, { setTimeAny, setTimeNow, setTimeLater, setTimeAll })(MenuListTime);
