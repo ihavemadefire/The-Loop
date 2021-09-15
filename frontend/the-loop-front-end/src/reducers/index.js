@@ -45,6 +45,16 @@ const currentDataSetReducer = (currentDataSet = null, action) => {
   return currentDataSet;
 };
 
+const resultsDataReducer = (resultsData = [], action) => {
+  if (action.type === 'SET_RESULTS_DATA') {
+    const newResults = [...resultsData, action.payload];
+    return newResults;
+  } else if (action.type === 'CLEAR_RESULTS_DATA') {
+    return [];
+  }
+  return resultsData;
+}
+
 const selectedIndexReducer = (selectedIndex = 0, action) => {
   if (action.type === 'SET_SELECTED_INDEX') {
     return action.payload;
@@ -73,6 +83,7 @@ export default combineReducers({
 	searchType: searchTypeReducer,
   showMapOverList: showMapReducer,
   currentDataSet: currentDataSetReducer,
+  resultsData: resultsDataReducer,
   selectedEventIndex: selectedIndexReducer,
   eventTypeFilters: eventTypeFilterListReducer,
 });

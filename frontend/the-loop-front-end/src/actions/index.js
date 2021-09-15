@@ -61,6 +61,19 @@ export const setCurrentData = (data) => {
   };
 };
 
+export const addResultsData = (data) => {
+  return {
+    type: 'SET_RESULTS_DATA',
+    payload: data
+  };
+};
+
+export const clearResultsData = () => {
+  return {
+    type: 'CLEAR_RESULTS_DATA',
+  };
+};
+
 export const setHighlightedIndex = (index) => {
   return {
     type: 'SET_SELECTED_INDEX',
