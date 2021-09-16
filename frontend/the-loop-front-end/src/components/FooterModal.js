@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   p: {
-    fontSize: '11px',
+    fontSize: '.8rem',
   },
   aLinks: {
     color: COLORS.darkBlue,
