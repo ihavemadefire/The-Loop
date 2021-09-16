@@ -11,7 +11,7 @@ import { setTimeNow, setTimeAny, setTimeLater, setMainApp, setMapHide, setMapSho
 import EventCard from './EventCard.js';
 import GoogMap from './map/GoogMap.js';
 
-const viewHeight = 'calc(100vh - 110px)'
+const viewHeight = 'calc(100vh - 120px)'
 
 const useStyles = makeStyles({
   container: {
