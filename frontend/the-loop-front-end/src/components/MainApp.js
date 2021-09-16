@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
 import Fab from '@material-ui/core/Fab';
-import NavigationIcon from '@material-ui/icons/Navigation';
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -53,7 +52,7 @@ const useStyles = makeStyles({
   },
   mapToggle: {
     position: 'fixed',
-    bottom: 35,
+    bottom: 55,
     left: 'calc(50vw - 66px)',
     width: 132,
     zIndex: 5,
@@ -121,8 +120,7 @@ const MainApp = (props) => {
               className={classes.mapToggle}
               onClick={(e) => mapToggleDisplay()}
             >
-              <NavigationIcon className={classes.navIcon} />
-              show map
+                {props.showMapOverList ? 'show list' : 'show map'}
             </Fab>
           }
         </Box>

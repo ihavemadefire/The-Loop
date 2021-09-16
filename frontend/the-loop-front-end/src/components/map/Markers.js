@@ -37,12 +37,9 @@ const Marker = (props) => {
   const classes = useStyles();
 
   const isSelected = props.data.id === props.currentSelection;
-  if (isSelected) {
-    console.log(`Marker for ${props.data.name} currently selected`);
-  }
 
   return (
-    <div>
+    <div className={classes.container}>
       <LocationOnIcon 
         button
         className={(props.data.id === props.currentSelection) ? classes.selectedIconButton : classes.iconButton}

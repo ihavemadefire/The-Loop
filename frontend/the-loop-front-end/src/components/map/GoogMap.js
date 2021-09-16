@@ -54,11 +54,10 @@ const GoogMap = (props) => {
   const locationClickHandler = (eventId) => {
     props.setHighlightedIndex(eventId);
     props.changeSelection(eventId);
-    console.log(`${eventId} was cleared in googmap`);
+    //console.log(`${eventId} was cleared in googmap`);
   };
 
   //console.log(`Current selection event id: ${props.currentSelection}`);
-
 
   return (
     <div className={classes.container}>
