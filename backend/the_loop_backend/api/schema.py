@@ -46,7 +46,7 @@ class TimeType(DjangoObjectType):
 class EventType(DjangoObjectType):
     class Meta:
         model = Event
-        fields = ('id' ,'name', 'attribution', 'short_description', 'when','type', 'venue', 'recurring', 'active', 'description', 'tix_required', 'tix_link', 'image')
+        fields = ('id' ,'name', 'attribution', 'short_description', 'when', 'end','type', 'venue', 'recurring', 'active', 'description', 'tix_required', 'tix_link', 'image')
 
 
 class TypeEventType(DjangoObjectType):

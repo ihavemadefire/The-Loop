@@ -101,6 +101,7 @@ class Event(models.Model):
     venue = models.ForeignKey(Place, on_delete=CASCADE)
     recurring = models.BooleanField(null=True)
     when = models.DateTimeField(default=datetime.now)
+    end = models.DateTimeField(default=datetime.now)
     active = models.BooleanField(null=True)
     description = models.TextField(null=True)
     tix_required = models.BooleanField(null=True)
