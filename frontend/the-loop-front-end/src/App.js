@@ -9,7 +9,7 @@ import Footer from './components/Footer.js';
 
 
 const client = new ApolloClient({
-	uri: "https://3.88.191.13:8000/___graphql"
+	uri: "http://3.88.191.13:8000/___graphql"
 });
 
 function App() {
