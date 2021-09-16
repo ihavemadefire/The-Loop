@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
     color: COLORS.darkBlue,
     overflowY: 'auto',
+    maxHeight: '100vh',
   },
   contactInfo: {
     display: 'flex',
