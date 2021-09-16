@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Container, ButtonGroup, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from "react-router-dom";
 
 import { setTimeNow, setTimeAny, setTimeLater, setMainApp } from '../actions/index.js';
 import LogoWithCatchphrase from './logos/logoWithCatchphrase.js';
@@ -12,7 +13,6 @@ import { COLORS } from '../styles/colors.js';
 const LandingForm = (props) => {
 	const classes = useStyles();
 
-	//console.log(props);
 	const handleTimeFrameSelection = time => {
 		if (time === props.timeFrame) {
 			return classes.selectedChip;
@@ -20,39 +20,40 @@ const LandingForm = (props) => {
 		return classes.chip;
 	}
 	
-	if (!props.showMainApp) {
-		return (
-			<Container maxWidth="sm">
-				<Box className={classes.box} color="primary">
-					<LogoWithCatchphrase />
-					<ButtonGroup variant="text" size="large" color="primary" aria-label="large outlined primary button group">
-						<Button 
-							className={handleTimeFrameSelection('now')}
-							onClick={() => props.setTimeNow()}
-						>
-							now
-						</Button>
-						<Button 
-							className={handleTimeFrameSelection('later')}
-							onClick={() => props.setTimeLater()}
-						>
-							later
-						</Button>
-					</ButtonGroup>
-					<Button 
-						className={classes.mainButton}
-						variant="contained"
-						color="primary"
-						onClick={() => props.setMainApp()}
-					>
-						loop me in
-					</Button>
-				</Box>
-			</Container>
-		);
-	} else {
-		return null;
-	};
+	
+  return (
+    <Container maxWidth="sm">
+      <Box className={classes.box} color="primary">
+        <LogoWithCatchphrase />
+        <ButtonGroup variant="text" size="large" color="primary" aria-label="large outlined primary button group">
+          <Button 
+            className={handleTimeFrameSelection('now')}
+            onClick={() => props.setTimeNow()}
+          >
+            now
+          </Button>
+          <Button 
+            className={handleTimeFrameSelection('later')}
+            onClick={() => props.setTimeLater()}
+          >
+            later
+          </Button>
+        </ButtonGroup>
+        <Link to="/app" style={{ textDecoration: 'none' }}>
+          <Button 
+            className={classes.mainButton}
+            style={{ textDecoration: 'none' }}
+            variant="contained"
+            color="primary"
+            onClick={() => props.setMainApp()}
+            >
+            loop me in
+          </Button>
+        </Link>
+      </Box>
+    </Container>
+  );
+
 
 };
 
@@ -77,7 +78,10 @@ const useStyles = makeStyles({
 		fontWeight: 700,
 		fontSize: '1.2rem',
 		color: COLORS.regRed,
-	}
+	},
+  link: {
+    textDecoration: 'none'
+  }
 });
 
 const mapStateToProps = (state) => {

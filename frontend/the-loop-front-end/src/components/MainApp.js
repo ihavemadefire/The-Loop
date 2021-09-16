@@ -86,50 +86,46 @@ const MainApp = (props) => {
     };
   };
   
-	if (props.showMainApp) {
-    return (
-      <>
-				<MenuBarRightDrawer 
-          updateSearchParams={(checked) => setEventSearchParamsHelper(checked)}
-          updateTimeParam={(param) => setEventTimeHelper(param)}
-        />
-        <Box className={classes.box} my={5}>
-          <List
-            className={`${mapToggleButton ? classes.listMapHidden : classes.listMapShown} ${classes.list}`}
-            style={props.showMapOverList ? {display: 'none'} : {}}
-          >
-            <EventCard 
-              currentSelection={selectedEvent}
-              eventSearchParams={eventSearchParams}
-              eventTimeParam={eventTimeParam}
-              changeSelection={(id) => setSelectedEventHelper(id)}
-              >
-            </EventCard>
-          </List>
-          { (props.showMapOverList || !mapToggleButton) &&
-              <GoogMap 
-                currentSelection={selectedEvent} 
-                changeSelection={(id) => setSelectedEventHelper(id)}
-              >
-              </GoogMap>
-          }
-          { mapToggleButton && 
-            <Fab
-              color="primary"
-              variant="extended"
-              className={classes.mapToggle}
-              onClick={(e) => mapToggleDisplay()}
+  return (
+    <>
+      <MenuBarRightDrawer 
+        updateSearchParams={(checked) => setEventSearchParamsHelper(checked)}
+        updateTimeParam={(param) => setEventTimeHelper(param)}
+      />
+      <Box className={classes.box} my={5}>
+        <List
+          className={`${mapToggleButton ? classes.listMapHidden : classes.listMapShown} ${classes.list}`}
+          style={props.showMapOverList ? {display: 'none'} : {}}
+        >
+          <EventCard 
+            currentSelection={selectedEvent}
+            eventSearchParams={eventSearchParams}
+            eventTimeParam={eventTimeParam}
+            changeSelection={(id) => setSelectedEventHelper(id)}
             >
-                {props.showMapOverList ? 'show list' : 'show map'}
-            </Fab>
-          }
-        </Box>
-			</>
-		)
-			
-	} else {
-		return null;
-	};
+          </EventCard>
+        </List>
+        { (props.showMapOverList || !mapToggleButton) &&
+            <GoogMap 
+              currentSelection={selectedEvent} 
+              changeSelection={(id) => setSelectedEventHelper(id)}
+            >
+            </GoogMap>
+        }
+        { mapToggleButton && 
+          <Fab
+            color="primary"
+            variant="extended"
+            className={classes.mapToggle}
+            onClick={(e) => mapToggleDisplay()}
+          >
+              {props.showMapOverList ? 'show list' : 'show map'}
+          </Fab>
+        }
+      </Box>
+    </>
+  );
+	
 };
 
 

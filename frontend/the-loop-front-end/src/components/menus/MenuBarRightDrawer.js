@@ -13,6 +13,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import FilterNoneIcon from '@material-ui/icons/FilterNone';
 import { Button } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Link } from "react-router-dom";
+
 
 import LogoAlone from '../logos/Logo.js';
 import MenuListTime from './MenuListTime.js';
@@ -128,7 +130,7 @@ export default function MenuBarRightDrawer(props) {
         })}
       >
         <Toolbar disableGutters className={classes.toolbar} >
-					<LogoAlone />
+					<Link to='/'><LogoAlone /></Link>
 					<div className={classes.menuItems}>
 						{( ((!open && catchphraseClosedDrawer) || (open && catchphraseOpenDrawer)) && 
 							<div className={classes.catchphrase}>

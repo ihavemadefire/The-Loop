@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     color: COLORS.darkBlue,
     overflowY: 'auto',
     maxHeight: '100vh',
+    maxWidth: '800px',
   },
   contactInfo: {
     display: 'flex',
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   p: {
-    fontSize: '.8rem',
+    fontSize: '.9rem',
   },
   aLinks: {
     color: COLORS.darkBlue,
