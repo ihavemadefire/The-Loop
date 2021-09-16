@@ -108,10 +108,11 @@ const MainApp = (props) => {
             </EventCard>
           </List>
           { (props.showMapOverList || !mapToggleButton) &&
-            <GoogMap 
-              currentSelection={selectedEvent} 
-              changeSelection={(id) => setSelectedEventHelper(id)}
-            />
+              <GoogMap 
+                currentSelection={selectedEvent} 
+                changeSelection={(id) => setSelectedEventHelper(id)}
+              >
+              </GoogMap>
           }
           { mapToggleButton && 
             <Fab

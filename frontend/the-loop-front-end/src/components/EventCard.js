@@ -135,6 +135,7 @@ const EventCard = (props) => {
 					}
           lat
           long
+          image
 				}
 			}
 		}
@@ -173,13 +174,13 @@ const EventCard = (props) => {
       //console.log(hoursUntilStart);
       
       if (timeParam === 'now') {
-        if (hoursUntilStart > 60) {
+        if (hoursUntilStart > 2) {
           return null;
         };
       };
       
       if (timeParam === 'later') {
-        if (hoursUntilStart < 60) return null;
+        if (hoursUntilStart < 2) return null;
       };
       
       props.addResultsData(loopEvent);
@@ -209,19 +210,19 @@ const EventCard = (props) => {
                 <DetailPop detailType='venue' details={loopEvent.venue}/>
               </div>
               <div className={classes.inlineInfo}>
-                <div className={classes.subHeading}>Date:</div>
+                <div className={classes.subHeading}>When:</div>
                 <div className={classes.subInfo}>
                   {dayFormatter(eventStartTime)}
                 </div>
               </div>
               <div className={classes.inlineInfo}>
-                <div className={classes.subHeading}>Starts:</div>
+                <div className={classes.subHeading}></div>
                 <div className={classes.subInfo}>
                   {startTimeFormatter(eventStartTime)}
                 </div>
               </div>
               <div className={classes.inlineInfo}>
-                <div className={classes.subHeading}>Ends:</div>
+                <div className={classes.subHeading}></div>
                 <div className={classes.subInfo}>
                   {endTimeFormatter(eventEndTime)}
                 </div>

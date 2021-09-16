@@ -2,12 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import GoogleMapReact from 'google-map-react';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import IconButton from '@material-ui/core/IconButton';
 import { COLORS } from '../../styles/colors.js';
 import { apiKey } from './api_key2';
 import { setHighlightedIndex } from '../../actions/index.js';
-import InfoCard from './InfoCard.js';
+import Marker from './Markers.js';
 
 const useStyles = makeStyles({
   container: {
@@ -43,8 +41,6 @@ const useStyles = makeStyles({
 
 const GoogMap = (props) => {
   const classes = useStyles();
-  //const [infoCardLat, setInfoCardLat] = useState();
-  //const [infoCardLng, setInfoCardLng] = useState();
 
   const defaultProps = {
     center: {
@@ -55,9 +51,10 @@ const GoogMap = (props) => {
   };
 
 
-  const locationClickHandler = (e, eventId) => {
+  const locationClickHandler = (eventId) => {
     props.setHighlightedIndex(eventId);
     props.changeSelection(eventId);
+    console.log(`${eventId} was cleared in googmap`);
   };
 
   //console.log(`Current selection event id: ${props.currentSelection}`);
@@ -72,28 +69,19 @@ const GoogMap = (props) => {
       >
         {(props.resultsData) && 
           props.resultsData.map((loopEvent) => (
-              <IconButton
-                className={(loopEvent.id === props.currentSelection) ? classes.selectedIconButton: classes.iconButton}
+              <Marker
+                button  
+                currentSelection={props.currentSelection}
+                data={loopEvent}
                 key={loopEvent.id}
-                color='secondary'
                 lat={loopEvent.venue.lat}
                 lng={loopEvent.venue.long}
-                size='small'
-                onClick={(e) => locationClickHandler(e, loopEvent.id)}
+                clearSelection={() => locationClickHandler(0)}
+                locationClickHandler={() => locationClickHandler(loopEvent.id)}
               >
-                <LocationOnIcon 
-                  className={classes.locationIcon}
-                ></LocationOnIcon>
-              </IconButton>
+                
+              </Marker>
         ))}
-        <InfoCard 
-          selectedEvent={props.currentSelection}
-          resultsData={props.resultsData}
-          
-          //setLat={setInfoCardLat()}
-          //setLng={setInfoCardLng()}
-
-        />
       </GoogleMapReact>
     </div>
   );
