@@ -9,6 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import chronologicalSort from './helpers/chronoSort.js';
 import { COLORS } from '../styles/colors.js'
 import DetailPop from './menus/DetailPop.js';
+import { dayFormatter, startTimeFormatter, endTimeFormatter } from './helpers/timeFormatters.js';
 import { setCurrentData, setHighlightedIndex, clearResultsData, addResultsData } from '../actions/index.js';
 
 
@@ -148,27 +149,7 @@ const EventCard = (props) => {
     )
   };
 
-  const dayFormatter = (time) => {
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const today = new Date();
-    const todayFlair = 'TODAY!';
-    const dayIsToday = (time.toDateString() === today.toDateString())
-    const dayString = `${days[time.getDay()]} ${month[time.getMonth()]} ${time.getDate()}`
-    //return (dayIsToday ? todayFlair : dayString);
-    return dayString;
-  };
-
-  const timeFormatter = (eventStartTime) => {
-    const today = new Date();
-    const startedFlair = ` (started at ${eventStartTime.toLocaleTimeString()})`;
-    const dayIsToday = (eventStartTime.toDateString() === today.toDateString())
-    if (dayIsToday && (eventStartTime.getTime() < today.getTime())) {
-      return startedFlair;
-    } 
-    const timeString = ` - ${eventStartTime.toLocaleTimeString()}`
-    return timeString;
-  };
+  
 
   const {loading, error, data } = useQuery(query);
   if (loading) return <p>Loading...</p>;
@@ -177,43 +158,28 @@ const EventCard = (props) => {
   props.setCurrentData(data.allEvents);
   props.clearResultsData();
 
-  console.log('All events:______________')
-  console.log(data.allEvents);
-  console.log('___________________________')
-
+  // Removes ended events, sets order by start time with events ending soon at the top
   const eventsSorted = chronologicalSort(data.allEvents);
 
   return eventsSorted.map((loopEvent) => {
     if (searchParams.includes(loopEvent.type[0].type.toLowerCase()) || searchParams.length === 0) {
       const currentTime = new Date();
-      const eventTime = new Date(loopEvent.when)
-      const eventDay = eventTime.toDateString();
-      const today = currentTime.toDateString();
-      const eventStartTime = eventTime.toTimeString();
-      const timeNow = currentTime.toTimeString();
+      const eventStartTime = new Date(loopEvent.when)
+      const eventEndTime = new Date(loopEvent.end)
       const timeParam = props.eventTimeParam;
       
-      // console.log(`Now:     ${currentTime.toTimeString()}`);
-      // console.log(`Event:   ${eventTime.toTimeString()}`);
-      // console.log(`Is it going on now: ${eventStartTime < timeNow}`);
-      // console.log(`Now:     ${currentTime.toDateString()}`);
-      // console.log(`Event:   ${eventTime.toDateString()}`);
-      // console.log(`Is date today: ${eventDay === today}`);
-      // console.log(`Is date today or later: ${eventDay >= today}`);
-      // console.log(`Time period: ${props.eventTimeParam}`)
-      // console.log(loopEvent);
-      // if (timeParam === 'anytime') {
-      //   if (eventTime.getTime() < currentTime.getTime()) return null;
-      // };
-
+      const hoursUntilStart = (eventStartTime.getTime() - currentTime.getTime()) / (1000 * 60 * 60);
+      //console.log("hours until start event");
+      //console.log(hoursUntilStart);
+      
       if (timeParam === 'now') {
-        if (eventDay !== today || eventStartTime > timeNow) {
+        if (hoursUntilStart > 60) {
           return null;
         };
       };
       
       if (timeParam === 'later') {
-        if (eventDay !== today) return null;
+        if (hoursUntilStart < 60) return null;
       };
       
       props.addResultsData(loopEvent);
@@ -243,9 +209,21 @@ const EventCard = (props) => {
                 <DetailPop detailType='venue' details={loopEvent.venue}/>
               </div>
               <div className={classes.inlineInfo}>
-                <div className={classes.subHeading}>When:</div>
+                <div className={classes.subHeading}>Date:</div>
                 <div className={classes.subInfo}>
-                  {dayFormatter(eventTime)}{timeFormatter(eventTime)}
+                  {dayFormatter(eventStartTime)}
+                </div>
+              </div>
+              <div className={classes.inlineInfo}>
+                <div className={classes.subHeading}>Starts:</div>
+                <div className={classes.subInfo}>
+                  {startTimeFormatter(eventStartTime)}
+                </div>
+              </div>
+              <div className={classes.inlineInfo}>
+                <div className={classes.subHeading}>Ends:</div>
+                <div className={classes.subInfo}>
+                  {endTimeFormatter(eventEndTime)}
                 </div>
               </div>
             </div>

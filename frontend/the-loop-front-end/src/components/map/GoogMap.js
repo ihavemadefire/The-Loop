@@ -60,7 +60,7 @@ const GoogMap = (props) => {
     props.changeSelection(eventId);
   };
 
-  console.log(`Current selection event id: ${props.currentSelection}`);
+  //console.log(`Current selection event id: ${props.currentSelection}`);
 
 
   return (

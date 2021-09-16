@@ -17,15 +17,15 @@ const useStyles = makeStyles({
 const InfoCard = (props) => {
   const classes = useStyles();
 
-  console.log(props.resultsData)
+  //console.log(props.resultsData)
 
   
 
   if (props.selectedEvent) {
     const data = props.resultsData.filter(result => result.id === props.selectedEvent)[0];
     const venue = data.venue;
-    console.log(data);
-    console.log(venue);
+    //console.log(data);
+    //console.log(venue);
     return (
       <Card 
         className={classes.root}
