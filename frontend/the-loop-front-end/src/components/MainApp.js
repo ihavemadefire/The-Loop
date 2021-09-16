@@ -111,7 +111,7 @@ const MainApp = (props) => {
             <GoogMap 
               currentSelection={selectedEvent} 
               changeSelection={(id) => setSelectedEventHelper(id)}
-              />
+            />
           }
           { mapToggleButton && 
             <Fab

@@ -44,19 +44,19 @@ const MenuListTime = (props) => {
   const currentTime = () => {
 		if (props.timeFrame === 'now') {
 			return now;
-		} else if (props.timeFrame === 'any') {
-			return any;
 		} else if (props.timeFrame === 'later') {
 			return later;
+		} else if (props.timeFrame === 'any') {
+			return any;
 		} else if (props.timeFrame === 'all') {
       return allThings;
     }
 	};
 
-  const now = 'happening now';
-  const later = 'happening today';
+  const now = 'now';
+  const later = 'later';
   const any = 'for the future';
-  const allThings = 'show it all';
+  const allThings = 'magic dev btn';
 
 	const handleClose = (event) => {
 
@@ -121,8 +121,6 @@ const MenuListTime = (props) => {
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={handleClose}>{now}</MenuItem>
                     <MenuItem onClick={handleClose}>{later}</MenuItem>
-                    <MenuItem onClick={handleClose}>{any}</MenuItem>
-                    <MenuItem onClick={handleClose}>{allThings}</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

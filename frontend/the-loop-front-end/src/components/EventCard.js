@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import ListItem from '@material-ui/core/ListItem';
 
+import chronologicalSort from './helpers/chronoSort.js';
 import { COLORS } from '../styles/colors.js'
 import DetailPop from './menus/DetailPop.js';
 import { setCurrentData, setHighlightedIndex, clearResultsData, addResultsData } from '../actions/index.js';
@@ -112,6 +113,7 @@ const EventCard = (props) => {
 				description
         shortDescription
         when
+        end
 				venue {
 					id
 					name
@@ -153,7 +155,8 @@ const EventCard = (props) => {
     const todayFlair = 'TODAY!';
     const dayIsToday = (time.toDateString() === today.toDateString())
     const dayString = `${days[time.getDay()]} ${month[time.getMonth()]} ${time.getDate()}`
-    return (dayIsToday ? todayFlair : dayString);
+    //return (dayIsToday ? todayFlair : dayString);
+    return dayString;
   };
 
   const timeFormatter = (eventStartTime) => {
@@ -174,7 +177,13 @@ const EventCard = (props) => {
   props.setCurrentData(data.allEvents);
   props.clearResultsData();
 
-  return data.allEvents.map((loopEvent) => {
+  console.log('All events:______________')
+  console.log(data.allEvents);
+  console.log('___________________________')
+
+  const eventsSorted = chronologicalSort(data.allEvents);
+
+  return eventsSorted.map((loopEvent) => {
     if (searchParams.includes(loopEvent.type[0].type.toLowerCase()) || searchParams.length === 0) {
       const currentTime = new Date();
       const eventTime = new Date(loopEvent.when)
@@ -183,6 +192,7 @@ const EventCard = (props) => {
       const eventStartTime = eventTime.toTimeString();
       const timeNow = currentTime.toTimeString();
       const timeParam = props.eventTimeParam;
+      
       // console.log(`Now:     ${currentTime.toTimeString()}`);
       // console.log(`Event:   ${eventTime.toTimeString()}`);
       // console.log(`Is it going on now: ${eventStartTime < timeNow}`);
@@ -192,9 +202,9 @@ const EventCard = (props) => {
       // console.log(`Is date today or later: ${eventDay >= today}`);
       // console.log(`Time period: ${props.eventTimeParam}`)
       // console.log(loopEvent);
-      if (timeParam === 'anytime') {
-        if (eventTime.getTime() < currentTime.getTime()) return null;
-      };
+      // if (timeParam === 'anytime') {
+      //   if (eventTime.getTime() < currentTime.getTime()) return null;
+      // };
 
       if (timeParam === 'now') {
         if (eventDay !== today || eventStartTime > timeNow) {
