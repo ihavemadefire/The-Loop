@@ -9,7 +9,7 @@ import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { setTimeNow, setTimeAny, setTimeLater } from '../../actions';
+import { setTimeNow, setTimeAny, setTimeLater, setTimeAll } from '../../actions';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,9 +22,10 @@ const useStyles = makeStyles((theme) => ({
 	button: {
 		flexShrink: 0,
 		whiteSpace: 'nowrap',
-		width: '90px',
+		//width: '90px',
 		borderBottom: '1px solid',
 		borderTop: '1px solid',
+		marginRight: 10,
 	},
 	typography: {
 
@@ -42,29 +43,41 @@ const MenuListTime = (props) => {
 
   const currentTime = () => {
 		if (props.timeFrame === 'now') {
-			return 'now';
-		} else if (props.timeFrame === 'any') {
-			return 'anytime';
+			return now;
 		} else if (props.timeFrame === 'later') {
-			return 'later';
-		}
+			return later;
+		} else if (props.timeFrame === 'any') {
+			return any;
+		} else if (props.timeFrame === 'all') {
+      return allThings;
+    }
 	};
+
+  const now = 'now';
+  const later = 'later';
+  const any = 'for the future';
+  const allThings = 'magic dev btn';
 
 	const handleClose = (event) => {
 
 		const selection = event.target.firstChild.data;
-		if (selection === 'now') {
+		if (selection === now) {
 			props.setTimeNow();
-		} else if (selection === 'later') {
-			props.setTimeLater();
-		} else if (selection === 'anytime') {
-			props.setTimeAny();
-		}
-
+      props.updateTimeParam('now')
+		} else if (selection === later) {
+      props.setTimeLater();
+      props.updateTimeParam('later')
+		} else if (selection === any) {
+      props.setTimeAny();
+      props.updateTimeParam('anytime')
+		} else if (selection === allThings) {
+      props.setTimeAll();
+      props.updateTimeParam('all');
+    }
+    
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpen(false);
   };
 
@@ -106,9 +119,8 @@ const MenuListTime = (props) => {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>now</MenuItem>
-                    <MenuItem onClick={handleClose}>later</MenuItem>
-                    <MenuItem onClick={handleClose}>anytime</MenuItem>
+                    <MenuItem onClick={handleClose}>{now}</MenuItem>
+                    <MenuItem onClick={handleClose}>{later}</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -124,4 +136,4 @@ const mapStateToProps = (state) => {
 	return { timeFrame: state.timeFrame };
 };
 
-export default connect(mapStateToProps, { setTimeAny, setTimeNow, setTimeLater })(MenuListTime);
+export default connect(mapStateToProps, { setTimeAny, setTimeNow, setTimeLater, setTimeAll })(MenuListTime);

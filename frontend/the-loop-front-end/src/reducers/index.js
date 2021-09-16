@@ -7,7 +7,9 @@ const timeFrameReducer = (timeFrame = 'now', action) => {
 		return 'any';
 	} else if (action.type === 'TIME_LATER_SELECTED') {
 		return 'later';
-	}
+	} else if (action.type === 'TIME_ALL_SELECTED') {
+    return 'all';
+  }
 	return timeFrame;
 };
 
@@ -25,10 +27,63 @@ const showMainAppReducer = (showMain = false, action) => {
 		return true;
 	}
 	return showMain;
+};
+
+const showMapReducer = (showMapOverList = false, action) => {
+	if (action.type === 'SHOW_MAP') {
+		return true;
+	} else if (action.type === 'HIDE_MAP') {
+    return false;
+  }
+	return showMapOverList;
+};
+
+const currentDataSetReducer = (currentDataSet = null, action) => {
+  if (action.type === 'RESET_DATA') {
+    return action.payload;
+  }
+  return currentDataSet;
+};
+
+const resultsDataReducer = (resultsData = [], action) => {
+  if (action.type === 'SET_RESULTS_DATA') {
+    const newResults = [...resultsData, action.payload];
+    return newResults;
+  } else if (action.type === 'CLEAR_RESULTS_DATA') {
+    return [];
+  }
+  return resultsData;
+}
+
+const selectedIndexReducer = (selectedIndex = 0, action) => {
+  if (action.type === 'SET_SELECTED_INDEX') {
+    return action.payload;
+  }
+  return selectedIndex;
+};
+
+const eventTypeFilterListReducer = (eventTypeFilters = [], action) => {
+  if (action.type === 'SET_EVENT_TYPE_FILTERS') {
+      return ['concerts', 'live music', 'community events', 'art and museums', 'live sports', 'activities', 'happy hours'];
+  } else if (action.type === 'ADD_EVENT_TYPE_FILTERS') {
+      const newFilters = action.payload;
+      if (newFilters[0] === 0) {
+        newFilters.splice(0, 1);
+      }
+      return newFilters;
+  } else if (action.type === 'DEL_EVENT_TYPE_FILTERS') {
+      return [];
+  }
+  return eventTypeFilters;
 }
 
 export default combineReducers({
 	showMain: showMainAppReducer,
 	timeFrame: timeFrameReducer,
 	searchType: searchTypeReducer,
+  showMapOverList: showMapReducer,
+  currentDataSet: currentDataSetReducer,
+  resultsData: resultsDataReducer,
+  selectedEventIndex: selectedIndexReducer,
+  eventTypeFilters: eventTypeFilterListReducer,
 });
