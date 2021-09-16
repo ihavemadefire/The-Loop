@@ -43,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
   },
   p: {
     fontSize: '11px',
+  },
+  aLinks: {
+    color: COLORS.darkBlue,
+    display: 'block',
+    textDecoration: 'none'
   }
 }));
 
@@ -99,18 +104,18 @@ const FooterModal = () => {
             <p className={classes.p}>Thanks for checking us out!</p>
             <div className={classes.contactInfo}>
               <p className={classes.name}><b>Travis Bearden</b></p>
-              <LinkedInIcon className={classes.linkIcon}/>
-              <GitHubIcon className={classes.linkIcon}/>
+              <a className={classes.aLinks} href='http://linkedin.com/in/travisbearden'><LinkedInIcon className={classes.linkIcon}/></a>
+              <a className={classes.aLinks} href='http://github.com/Beardocracy'><GitHubIcon className={classes.linkIcon}/></a>
             </div>
             <div className={classes.contactInfo}>
               <p className={classes.name}><b>Jacob Ide</b></p>
-              <LinkedInIcon className={classes.linkIcon}/>
-              <GitHubIcon className={classes.linkIcon}/>
+              <a className={classes.aLinks} href='http://www.linkedin.com/in/jacobide/'><LinkedInIcon className={classes.linkIcon}/></a>
+              <a className={classes.aLinks} href='http://github.com/ihavemadefire'><GitHubIcon className={classes.linkIcon}/></a>
             </div>
             <div className={classes.contactInfo}>
               <p className={classes.name}><b>Colson Scott</b></p>
-              <LinkedInIcon className={classes.linkIcon}/>
-              <GitHubIcon className={classes.linkIcon}/>
+              <a className={classes.aLinks} href='http://linkedin.com/in/colson-scott'><LinkedInIcon className={classes.linkIcon}/></a>
+              <a className={classes.aLinks} href='http://github.com/OctopusHugz'><GitHubIcon className={classes.linkIcon}/></a>
             </div>
             <div className={classes.button}>
               <Button 
