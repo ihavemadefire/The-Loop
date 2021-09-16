@@ -17,6 +17,7 @@ const LogoAlone = () => (
 const LogoContainer = styled(Container) ({
 	// display: 'block',
 	margin: '.7rem 0 0 0',
+	width: 'auto'
 });
 
 
